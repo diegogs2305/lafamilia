@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bienvenido</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .link-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 400px;
+      transition: 0.3s;
+    }
+
+    .link-box:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    a {
+      color: #ffd700;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>¡Bienvenido, crack! 😎</h1>
+  <p>Has iniciado sesión correctamente. Elige lo que quieres hacer:</p>
+
+  <div class="container">
+    <div class="link-box">
+      <a href="https://scratch.mit.edu/users/TU_USUARIO_DE_SCRATCH/" target="_blank">🎮 Ver mis juegos de Scratch</a>
+    </div>
+    <div class="link-box">
+      <a href="https://chat.jotform.com/TU_CHATBOT" target="_blank">🤖 Usar el chatbot de JotForm</a>
+    </div>
+    <div class="link-box">
+      <a href="https://tuaplicacion.com" target="_blank">📱 Acceder a la App Oficial</a>
+    </div>
+  </div>
+
+  <script>
+    // Verificar si el usuario está logueado
+    if (!localStorage.getItem("isLoggedIn")) {
+      alert("No has iniciado sesión. Serás redirigido.");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
+
