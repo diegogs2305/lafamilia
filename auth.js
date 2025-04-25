@@ -1,6 +1,6 @@
 // Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -16,10 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Función para registrar un nuevo usuario
+// Función para registro de usuario
 function registerUser() {
-  const email = document.getElementById('emailRegister').value;
-  const password = document.getElementById('passwordRegister').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
   if (email === "" || password === "") {
     alert('Por favor, ingresa ambos campos.');
@@ -31,7 +31,7 @@ function registerUser() {
       const user = userCredential.user;
       console.log("Usuario registrado:", user);
       alert('¡Registro exitoso!');
-      window.location.href = "pagina-bienvenida.html";  // Redirige después del registro
+      window.location.href = "login.html"; // Redirige al login después de registrarse
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -65,5 +65,18 @@ function loginUser() {
       alert('Error en el inicio de sesión: ' + errorMessage);
     });
 }
+
+// Asegurarse de que el formulario de registro ejecute la función al enviar
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita que el formulario se recargue
+  registerUser(); // Llama a la función registerUser
+});
+
+// Asegurarse de que el formulario de login ejecute la función al enviar
+document.getElementById('loginForm')?.addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita que el formulario se recargue
+  loginUser(); // Llama a la función loginUser
+});
+
 
 
