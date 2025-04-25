@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Login y Registro</title>
   <script type="module">
-    // Importa las funciones que necesitas de Firebase SDK
+    // Importa las funciones necesarias de Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
@@ -47,8 +47,8 @@
 
     // Función para iniciar sesión
     function loginUser() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -69,14 +69,18 @@
 </head>
 <body>
   <h1>Formulario de Login y Registro</h1>
-  
+
+  <!-- Formulario de Iniciar Sesión -->
   <div>
     <h2>Iniciar sesión</h2>
-    <input type="email" id="email" placeholder="Correo electrónico" />
-    <input type="password" id="password" placeholder="Contraseña" />
+    <input type="email" id="loginEmail" placeholder="Correo electrónico" />
+    <input type="password" id="loginPassword" placeholder="Contraseña" />
     <button onclick="loginUser()">Iniciar sesión</button>
   </div>
 
+  <br><br>
+
+  <!-- Formulario de Registro -->
   <div>
     <h2>Registrar</h2>
     <input type="email" id="email" placeholder="Correo electrónico" />
@@ -85,4 +89,5 @@
   </div>
 </body>
 </html>
+
 
