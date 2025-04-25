@@ -7,14 +7,8 @@
   <link rel="stylesheet" href="orientacion.css" />
   <style>
     @keyframes fadeSlide {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     body {
@@ -63,7 +57,7 @@
     .card:nth-child(4) { animation-delay: 0.9s; }
     .card:nth-child(5) { animation-delay: 1.1s; }
     .card:nth-child(6) { animation-delay: 1.3s; }
-    .card:nth-child(7) { animation-delay: 1.5s; }
+    .card:nth-child(7) { animation-delay: 1.6s; }
 
     .card:hover {
       transform: scale(1.07);
@@ -103,30 +97,29 @@
       color: #ff4b2b;
     }
 
-    .logout-btn {
-      background-color: #ff4b2b;
-      color: white;
+    button {
+      background: #ff4b2b;
       border: none;
       padding: 10px 20px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 1em;
+      font-weight: bold;
+      color: white;
       cursor: pointer;
       margin-bottom: 30px;
     }
 
-    .logout-btn:hover {
-      background-color: #e0431d;
+    button:hover {
+      background: #ff3a1a;
     }
   </style>
 </head>
 <body>
   <script>
-    // Protección: Redirige si no está logueado
     if (!localStorage.getItem('userLoggedIn')) {
       window.location.href = 'login.html';
     }
 
-    // Función para cerrar sesión
     function logout() {
       localStorage.removeItem('userLoggedIn');
       window.location.href = 'login.html';
@@ -134,9 +127,9 @@
   </script>
 
   <h1>🎮 Centro de Juegos de Scratch</h1>
-  <p>Explora, piensa y ¡disfruta mientras juegas!</p>
+  <p>Explora, piensa y ¡Disfruta mientras juegas!</p>
 
-  <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+  <button onclick="logout()">Cerrar sesión</button>
 
   <div class="game-grid">
     <div class="card">
@@ -165,7 +158,7 @@
       <a href="SAVE%20THE%20FROG.html">Jugar</a>
     </div>
     <div class="card">
-      <h2>🦖 Juego del Dinosaurio</h2>
+      <h2>🦖 Juego del Dinosaurio de Google Cloud</h2>
       <div class="game-icon">🦖</div>
       <a href="Juego_Dinosaurio.html">Jugar</a>
     </div>
@@ -177,9 +170,10 @@
   </div>
 
   <div class="footer">
-    <h1>💬 ChatBot de La familia App</h1>
+    <h1>💻 ChatBot 💬 de La familia App</h1>
     <iframe id="JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990"
       title="Diego: Ayudar a las personas"
+      allowtransparency="true"
       allow="geolocation; microphone; camera; fullscreen"
       src="https://eu.jotform.com/agent/0195f1ed27ed79ba9af42a23dbe3bbbd8990?embedMode=iframe&background=0&shadow=1"
       frameborder="0"
@@ -187,16 +181,8 @@
     </iframe>
     <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
     <script>
-      window.jotformEmbedHandler("iframe[id='JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990']",
-        "https://eu.jotform.com");
+      window.jotformEmbedHandler("iframe[id='JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990']", "https://eu.jotform.com")
     </script>
-
-    <df-messenger
-      intent="WELCOME"
-      chat-title="LAFAMILIA"
-      agent-id="c4b7ea20-9eff-41ec-a8ed-516db3832fc5"
-      language-code="es">
-    </df-messenger>
 
     <h1>📱 Nuestra app oficial</h1>
     <iframe id="JotFormIFrame-240342763857361"
@@ -206,17 +192,8 @@
       style="height:700px; width:100%; border: 0;">
     </iframe>
 
-    <p><a href="https://bit.ly/m/lafamilia" target="_blank">Visita La Familia</a></p>
+    <p style="margin-top: 40px;"><a href="https://bit.ly/m/lafamilia" target="_blank">Visita La Familia</a></p>
     <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
   </div>
-<head>
-  <meta charset="UTF-8">
-  <title>Mi página de Login</title>
-  <link rel="stylesheet" href="estilos.css">
-  <script src="firebase-app.js"></script>
-  <script src="firebase-auth.js"></script>
-  <script src="auth.js" defer></script> <!-- Asegúrate de que esto esté al final -->
-</head>
-
 </body>
 </html>
