@@ -1,42 +1,65 @@
 // auth.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCZL5J8KvXq4O-siJFivVkOCqOpojcBoKM",
-  authDomain: "pagina-web-b25b5.firebaseapp.com",
-  projectId: "pagina-web-b25b5",
-  storageBucket: "pagina-web-b25b5.firebasestorage.app",
-  messagingSenderId: "491845378296",
-  appId: "1:491845378296:web:e1827a07d157fa05c8db0d",
-  measurementId: "G-86F0EJ46LS"
-};
+// Función para registrar al usuario
+function register() {
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
 
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  // Verifica que las contraseñas coincidan
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
 
-// Función para iniciar sesión
-export function login(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log('Usuario autenticado:', user.email);
-      window.location.href = 'pagina-principal.html';
-    })
-    .catch((error) => {
-      console.error('Error al iniciar sesión:', error);
-    });
+  // Verifica que los campos no estén vacíos
+  if (!username || !email || !password) {
+    alert("Por favor, completa todos los campos.");
+    return;
+  }
+
+  // Verifica que el correo electrónico sea válido
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    alert("Por favor, ingresa un correo electrónico válido.");
+    return;
+  }
+
+  // Guardamos los datos del usuario en el localStorage
+  const user = {
+    username: username,
+    email: email,
+    password: password
+  };
+
+  localStorage.setItem('user', JSON.stringify(user));
+  alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+
+  // Redirige a la página de login
+  window.location.href = 'login.html';
 }
 
-// Función de cierre de sesión
-export function logout() {
-  signOut(auth).then(() => {
-    console.log('Sesión cerrada');
-    window.location.href = 'login.html';
-  }).catch((error) => {
-    console.error('Error al cerrar sesión:', error);
-  });
+// Función de login
+function login() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Verifica que los campos no estén vacíos
+  if (!username || !password) {
+    alert("Por favor, ingresa todos los campos.");
+    return;
+  }
+
+  // Obtiene los datos del usuario registrado desde localStorage
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+
+  if (storedUser && storedUser.username === username && storedUser.password === password) {
+    alert("¡Inicio de sesión exitoso!");
+    localStorage.setItem('userLoggedIn', true);
+    window.location.href = 'index.html';
+  } else {
+    alert("Usuario o contraseña incorrectos.");
+  }
 }
 
