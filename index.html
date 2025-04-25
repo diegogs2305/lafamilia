@@ -6,7 +6,6 @@
   <title>Centro de Juegos - Diego G.S</title>
   <link rel="stylesheet" href="orientacion.css" />
   <style>
-    /* Animación de entrada con fade y deslizamiento */
     @keyframes fadeSlide {
       0% {
         opacity: 0;
@@ -64,7 +63,7 @@
     .card:nth-child(4) { animation-delay: 0.9s; }
     .card:nth-child(5) { animation-delay: 1.1s; }
     .card:nth-child(6) { animation-delay: 1.3s; }
-    .card:nth-child(7) { animation-delay: 1.6s; }
+    .card:nth-child(7) { animation-delay: 1.5s; }
 
     .card:hover {
       transform: scale(1.07);
@@ -98,33 +97,46 @@
       animation: fadeSlide 2s ease-out;
     }
 
-    /* Estilo para los iconos */
     .game-icon {
       font-size: 4em;
       margin-bottom: 15px;
       color: #ff4b2b;
     }
+
+    .logout-btn {
+      background-color: #ff4b2b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    .logout-btn:hover {
+      background-color: #e0431d;
+    }
   </style>
 </head>
 <body>
   <script>
-    // Comprobación de si el usuario está logueado
+    // Protección: Redirige si no está logueado
     if (!localStorage.getItem('userLoggedIn')) {
-      window.location.href = 'login.html'; // Redirige a la página de login si no está logueado
+      window.location.href = 'login.html';
     }
 
     // Función para cerrar sesión
     function logout() {
       localStorage.removeItem('userLoggedIn');
-      window.location.href = 'login.html'; // Redirige al login después de cerrar sesión
+      window.location.href = 'login.html';
     }
   </script>
 
   <h1>🎮 Centro de Juegos de Scratch</h1>
-  <p>Explora, piensa y ¡Disfruta mientras juegas!</p>
+  <p>Explora, piensa y ¡disfruta mientras juegas!</p>
 
-  <!-- Botón para cerrar sesión -->
-  <button onclick="logout()">Cerrar sesión</button>
+  <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
 
   <div class="game-grid">
     <div class="card">
@@ -153,7 +165,7 @@
       <a href="SAVE%20THE%20FROG.html">Jugar</a>
     </div>
     <div class="card">
-      <h2>🦖 Juego del Dinosaurio de Google Cloud</h2>
+      <h2>🦖 Juego del Dinosaurio</h2>
       <div class="game-icon">🦖</div>
       <a href="Juego_Dinosaurio.html">Jugar</a>
     </div>
@@ -165,43 +177,37 @@
   </div>
 
   <div class="footer">
-    <h1>💻 ChatBot 💬 de La familia App</h1>
-    <iframe id="JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990" title="Diego: Ayudar a las personas"
-    onload="window.parent.scrollTo(0,0)" allowtransparency="true"
-    allow="geolocation; microphone; camera; fullscreen"
-    src="https://eu.jotform.com/agent/0195f1ed27ed79ba9af42a23dbe3bbbd8990?embedMode=iframe&background=0&shadow=1"
-    frameborder="0" style="
-      min-width:100%;
-      max-width:100%;
-      height:688px;
-      border:none;
-      width:100%;
-    " scrolling="no">
+    <h1>💬 ChatBot de La familia App</h1>
+    <iframe id="JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990"
+      title="Diego: Ayudar a las personas"
+      allow="geolocation; microphone; camera; fullscreen"
+      src="https://eu.jotform.com/agent/0195f1ed27ed79ba9af42a23dbe3bbbd8990?embedMode=iframe&background=0&shadow=1"
+      frameborder="0"
+      style="min-width:100%; max-width:100%; height:688px; border:none;">
     </iframe>
     <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
     <script>
       window.jotformEmbedHandler("iframe[id='JotFormIFrame-0195f1ed27ed79ba9af42a23dbe3bbbd8990']",
-        "https://eu.jotform.com")
+        "https://eu.jotform.com");
     </script>
 
-    <p style="margin-bottom: 50px;"></p>
-
-    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
       intent="WELCOME"
       chat-title="LAFAMILIA"
       agent-id="c4b7ea20-9eff-41ec-a8ed-516db3832fc5"
-      language-code="es"
-    ></df-messenger>
+      language-code="es">
+    </df-messenger>
 
-    <h1>💻 Nuestra app oficial</h1>
+    <h1>📱 Nuestra app oficial</h1>
+    <iframe id="JotFormIFrame-240342763857361"
+      title="La familia"
+      allow="geolocation; microphone; camera"
+      src="https://eu.jotform.com/app/240342763857361?appEmbedded=1"
+      style="height:700px; width:100%; border: 0;">
+    </iframe>
 
-    <iframe id="JotFormIFrame-240342763857361" title=" La familia" allow="geolocation; microphone; camera" src="https://eu.jotform.com/app/240342763857361?appEmbedded=1" style="height:700px; width:1500px; border: 0;"></iframe>
-
-    <p style="margin-bottom: 100px;"></p><a href="https://bit.ly/m/lafamilia" target="_blank">Visita La Familia</a>
-
+    <p><a href="https://bit.ly/m/lafamilia" target="_blank">Visita La Familia</a></p>
     <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
   </div>
-  <p style="margin-bottom: 50px;"></p>
 </body>
 </html>
