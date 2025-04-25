@@ -1,64 +1,67 @@
-// auth.js
+// Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-// Función para registrar al usuario
-function register() {
-  const username = document.getElementById('username').value;
+const firebaseConfig = {
+  apiKey: "AIzaSyCZL5J8KvXq4O-siJFivVkOCqOpojcBoKM",
+  authDomain: "pagina-web-b25b5.firebaseapp.com",
+  projectId: "pagina-web-b25b5",
+  storageBucket: "pagina-web-b25b5.firebasestorage.app",
+  messagingSenderId: "491845378296",
+  appId: "1:491845378296:web:e1827a07d157fa05c8db0d",
+  measurementId: "G-86F0EJ46LS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Función para registrar un nuevo usuario
+function registerUser() {
+  const email = document.getElementById('emailRegister').value;
+  const password = document.getElementById('passwordRegister').value;
+
+  if (email === "" || password === "") {
+    alert('Por favor, ingresa ambos campos.');
+    return;
+  }
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("Usuario registrado:", user);
+      alert('¡Registro exitoso!');
+      window.location.href = "pagina-bienvenida.html";  // Redirigir después del registro
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error al registrar:', errorMessage);
+      alert('Error en el registro: ' + errorMessage);
+    });
+}
+
+// Función para iniciar sesión
+function loginUser() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
 
-  // Verifica que las contraseñas coincidan
-  if (password !== confirmPassword) {
-    alert("Las contraseñas no coinciden");
+  if (email === "" || password === "") {
+    alert('Por favor, ingresa ambos campos.');
     return;
   }
 
-  // Verifica que los campos no estén vacíos
-  if (!username || !email || !password) {
-    alert("Por favor, completa todos los campos.");
-    return;
-  }
-
-  // Verifica que el correo electrónico sea válido
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  if (!emailRegex.test(email)) {
-    alert("Por favor, ingresa un correo electrónico válido.");
-    return;
-  }
-
-  // Guardamos los datos del usuario en el localStorage
-  const user = {
-    username: username,
-    email: email,
-    password: password
-  };
-
-  localStorage.setItem('user', JSON.stringify(user));
-  alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-
-  // Redirige a la página de login
-  window.location.href = 'login.html';
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("Usuario iniciado sesión:", user);
+      alert('¡Inicio de sesión exitoso!');
+      window.location.href = "pagina-bienvenida.html";  // Redirigir después del login
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error al iniciar sesión:', errorMessage);
+      alert('Error en el inicio de sesión: ' + errorMessage);
+    });
 }
 
-// Función de login
-function login() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  // Verifica que los campos no estén vacíos
-  if (!username || !password) {
-    alert("Por favor, ingresa todos los campos.");
-    return;
-  }
-
-  // Obtiene los datos del usuario registrado desde localStorage
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-
-  if (storedUser && storedUser.username === username && storedUser.password === password) {
-    alert("¡Inicio de sesión exitoso!");
-    localStorage.setItem('userLoggedIn', true);
-    window.location.href = 'index.html';
-  } else {
-    alert("Usuario o contraseña incorrectos.");
-  }
-}
