@@ -1,116 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Iniciar Sesión - Centro de Juegos</title>
-  <link rel="stylesheet" href="orientacion.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Login y Registro</title>
+  <script type="module">
+    // Importa las funciones que necesitas de Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+    // Tu configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZL5J8KvXq4O-siJFivVkOCqOpojcBoKM",
+      authDomain: "pagina-web-b25b5.firebaseapp.com",
+      projectId: "pagina-web-b25b5",
+      storageBucket: "pagina-web-b25b5.firebasestorage.app",
+      messagingSenderId: "491845378296",
+      appId: "1:491845378296:web:e1827a07d157fa05c8db0d",
+      measurementId: "G-86F0EJ46LS"
+    };
+
+    // Inicializa Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Función para registrar un nuevo usuario
+    function registerUser() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Usuario registrado:", user);
+          alert('¡Registro exitoso!');
+          // Redirigir después del registro (si es necesario)
+          window.location.href = "pagina-bienvenida.html";
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Error al registrar:', errorMessage);
+          alert('Error en el registro: ' + errorMessage);
+        });
+    }
+
+    // Función para iniciar sesión
+    function loginUser() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Usuario iniciado sesión:", user);
+          alert('¡Inicio de sesión exitoso!');
+          // Redirigir después del inicio de sesión
+          window.location.href = "pagina-bienvenida.html";
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Error al iniciar sesión:', errorMessage);
+          alert('Error en el inicio de sesión: ' + errorMessage);
+        });
+    }
+  </script>
 </head>
-<style>
-  /* Animación de entrada con fade y deslizamiento */
-  @keyframes fadeSlide {
-    0% {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  body {
-    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 50px 20px;
-    text-align: center;
-    animation: fadeSlide 1.2s ease-out;
-  }
-
-  h1 {
-    font-size: 3em;
-    margin-bottom: 0.2em;
-    animation: fadeSlide 1s ease-out;
-  }
-
-  p {
-    font-size: 1.2em;
-    margin-bottom: 2em;
-    animation: fadeSlide 1.4s ease-out;
-  }
-
-  .form-container {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    width: 300px;
-    margin: 0 auto;
-    animation: fadeSlide 1.6s ease-out;
-  }
-
-  .form-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: none;
-    background: #333;
-    color: white;
-  }
-
-  .form-container button {
-    width: 100%;
-    padding: 10px;
-    background: #ff4b2b;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .form-container button:hover {
-    background: #ff3a1a;
-  }
-
-  .footer {
-    margin-top: 60px;
-    font-size: 0.9em;
-    color: #bbb;
-  }
-
-  .footer a {
-    color: #ff4b2b;
-    text-decoration: none;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-  }
-</style>
 <body>
-
-  <h1>🎮 Iniciar Sesión</h1>
-  <p>Accede a tu cuenta para disfrutar de todos nuestros juegos.</p>
-
-  <div class="form-container">
-    <!-- Formulario de inicio de sesión -->
-    <form id="login-form" action="login_logic.php" method="POST">
-      <input type="text" name="username" placeholder="Nombre de usuario" required />
-      <input type="password" name="password" placeholder="Contraseña" required />
-      <button type="submit">Iniciar sesión</button>
-    </form>
-
-    <!-- Enlace para registrarse -->
-    <p>No tienes cuenta? <a href="register.html">¡Regístrate aquí!</a></p>
+  <h1>Formulario de Login y Registro</h1>
+  
+  <div>
+    <h2>Iniciar sesión</h2>
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="loginUser()">Iniciar sesión</button>
   </div>
 
-  <div class="footer">
-    <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
+  <div>
+    <h2>Registrar</h2>
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="registerUser()">Registrar</button>
   </div>
-
 </body>
 </html>
+
