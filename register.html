@@ -1,99 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Registro - Centro de Juegos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Diego G.S</title>
+  <link rel="stylesheet" href="orientacion.css" />
   <style>
     body {
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      background: linear-gradient(45deg, #ffafbd, #ffc3a0);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-    }
-
-    .register-container {
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
-      text-align: center;
+      flex-direction: column;
     }
 
     h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
+      font-size: 3em;
       color: #ff4b2b;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    input[type="text"], input[type="password"], input[type="email"] {
+    h1 span {
+      margin-left: 10px;
+      font-size: 1.2em;
+      color: #6a1b9a;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
-      padding: 15px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px;
       margin: 10px 0;
-      background-color: #222;
-      border: 1px solid #555;
+      border: 1px solid #ddd;
       border-radius: 5px;
-      color: white;
       font-size: 1em;
+      box-sizing: border-box;
     }
 
-    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
-      border-color: #ff4b2b;
-    }
-
-    button {
+    .form-container button {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       background-color: #ff4b2b;
+      border: none;
       color: white;
       font-size: 1.2em;
-      border: none;
-      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #ff3a1a;
+    .form-container button:hover {
+      background-color: #e64a19;
     }
 
-    .switch-links {
+    .footer {
       margin-top: 20px;
       font-size: 0.9em;
-      color: #bbb;
+      color: #777;
     }
 
-    .switch-links a {
+    .footer a {
       color: #ff4b2b;
       text-decoration: none;
-    }
-
-    .switch-links a:hover {
-      text-decoration: underline;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-
-  <div class="register-container">
-    <h1>Regístrate</h1>
-    <input type="text" id="username" placeholder="Nombre de usuario" />
-    <input type="email" id="email" placeholder="Correo electrónico" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" />
-    <button onclick="register()">Registrarse</button>
-
-    <div class="switch-links">
-      <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
-    </div>
+  <h1>🎉 Regístrate <span>¡Te damos la bienvenida!</span></h1>
+  <div class="form-container">
+    <input type="email" id="email" placeholder="Correo electrónico" required />
+    <input type="password" id="password" placeholder="Contraseña" required />
+    <button onclick="registerUser()">Regístrate</button>
+  </div>
+  <div class="footer">
+    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
   </div>
 
   <script src="auth.js"></script>
 </body>
 </html>
+
 
