@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCZL5J8KvXq4O-siJFivVkOCqOpojcBoKM",
   authDomain: "pagina-web-b25b5.firebaseapp.com",
@@ -30,7 +31,7 @@ function registerUser() {
       const user = userCredential.user;
       console.log("Usuario registrado:", user);
       alert('¡Registro exitoso!');
-      window.location.href = "pagina-bienvenida.html";  // Redirigir después del registro
+      window.location.href = "pagina-bienvenida.html";  // Redirige después del registro
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -55,7 +56,7 @@ function loginUser() {
       const user = userCredential.user;
       console.log("Usuario iniciado sesión:", user);
       alert('¡Inicio de sesión exitoso!');
-      window.location.href = "pagina-bienvenida.html";  // Redirigir después del login
+      window.location.href = "pagina-bienvenida.html";  // Redirige después del login
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -64,4 +65,5 @@ function loginUser() {
       alert('Error en el inicio de sesión: ' + errorMessage);
     });
 }
+
 
