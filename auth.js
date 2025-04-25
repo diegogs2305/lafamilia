@@ -1,67 +1,66 @@
-// Función de iniciar sesión
-function iniciarSesion() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+// auth.js
 
-  // Asegurarse de que ambos campos están completos
-  if (!email || !password) {
-    alert("Por favor, completa ambos campos.");
+// Función para registrar al usuario
+function register() {
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  // Verifica que las contraseñas coincidan
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no coinciden");
     return;
   }
 
-  // Aquí puedes integrar con Firebase u otro sistema de autenticación.
-  // Ejemplo usando Firebase:
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      // Al iniciar sesión correctamente
-      console.log("Usuario iniciado sesión:", userCredential.user);
-      // Redirigir a la página de bienvenida (index.html)
-      window.location.href = "index.html";
-    })
-    .catch(error => {
-      console.error("Error al iniciar sesión:", error);
-      alert("Error al iniciar sesión. Verifica tus credenciales.");
-    });
-}
-
-// Función de registrar usuario
-function registrarUsuario() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  // Asegurarse de que ambos campos están completos
-  if (!email || !password) {
-    alert("Por favor, completa ambos campos.");
+  // Verifica que los campos no estén vacíos
+  if (!username || !email || !password) {
+    alert("Por favor, completa todos los campos.");
     return;
   }
 
-  // Aquí puedes integrar con Firebase u otro sistema de autenticación.
-  // Ejemplo usando Firebase:
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      // Al registrar correctamente
-      console.log("Usuario registrado:", userCredential.user);
-      // Redirigir a la página de inicio de sesión
-      window.location.href = "login.html";
-    })
-    .catch(error => {
-      console.error("Error al registrar usuario:", error);
-      alert("Error al registrar. Intenta nuevamente.");
-    });
-}
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  // Verifica que el correo electrónico sea válido
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    alert("Por favor, ingresa un correo electrónico válido.");
+    return;
+  }
 
-// Función para cerrar sesión
-function logout() {
-  firebase.auth().signOut()
-    .then(() => {
-      console.log("Sesión cerrada");
-      // Redirigir al login después de cerrar sesión
-      window.location.href = "login.html";
-    })
-    .catch(error => {
-      console.error("Error al cerrar sesión:", error);
-    });
+  // Guardamos los datos del usuario en el localStorage
+  const user = {
+    username: username,
+    email: email,
+    password: password
+  };
+
+  localStorage.setItem('user', JSON.stringify(user));
+  alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+
+  // Redirige a la página de login
+  window.location.href = 'login.html';
 }
+
+// Función de login
+function login() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Verifica que los campos no estén vacíos
+  if (!username || !password) {
+    alert("Por favor, ingresa todos los campos.");
+    return;
+  }
+
+  // Obtiene los datos del usuario registrado desde localStorage
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+
+  if (storedUser && storedUser.username === username && storedUser.password === password) {
+    alert("¡Inicio de sesión exitoso!");
+    localStorage.setItem('userLoggedIn', true);
+    window.location.href = 'index.html';
+  } else {
+    alert("Usuario o contraseña incorrectos.");
+  }
+}
+
 
