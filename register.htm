@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro - Centro de Juegos</title>
+  <link rel="stylesheet" href="orientacion.css" />
+</head>
+<style>
+  /* Animación de entrada con fade y deslizamiento */
+  @keyframes fadeSlide {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  body {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 50px 20px;
+    text-align: center;
+    animation: fadeSlide 1.2s ease-out;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    animation: fadeSlide 1s ease-out;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    animation: fadeSlide 1.4s ease-out;
+  }
+
+  .form-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    width: 300px;
+    margin: 0 auto;
+    animation: fadeSlide 1.6s ease-out;
+  }
+
+  .form-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background: #333;
+    color: white;
+  }
+
+  .form-container button {
+    width: 100%;
+    padding: 10px;
+    background: #ff4b2b;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .form-container button:hover {
+    background: #ff3a1a;
+  }
+
+  .footer {
+    margin-top: 60px;
+    font-size: 0.9em;
+    color: #bbb;
+  }
+
+  .footer a {
+    color: #ff4b2b;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+<body>
+
+  <h1>🎮 Crear una Cuenta</h1>
+  <p>Regístrate para disfrutar de nuestros juegos exclusivos.</p>
+
+  <div class="form-container">
+    <!-- Formulario de registro -->
+    <form id="register-form" action="register_logic.php" method="POST">
+      <input type="text" name="username" placeholder="Nombre de usuario" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <input type="password" name="confirm_password" placeholder="Confirmar Contraseña" required />
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <p>Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+    <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
+  </div>
+
+</body>
+</html>
+
