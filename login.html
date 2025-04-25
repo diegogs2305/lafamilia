@@ -3,54 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Iniciar sesión</title>
+  <title>Iniciar Sesión - Centro de Juegos</title>
+  <link rel="stylesheet" href="orientacion.css" />
 </head>
+<style>
+  /* Animación de entrada con fade y deslizamiento */
+  @keyframes fadeSlide {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  body {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 50px 20px;
+    text-align: center;
+    animation: fadeSlide 1.2s ease-out;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    animation: fadeSlide 1s ease-out;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    animation: fadeSlide 1.4s ease-out;
+  }
+
+  .form-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    width: 300px;
+    margin: 0 auto;
+    animation: fadeSlide 1.6s ease-out;
+  }
+
+  .form-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background: #333;
+    color: white;
+  }
+
+  .form-container button {
+    width: 100%;
+    padding: 10px;
+    background: #ff4b2b;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .form-container button:hover {
+    background: #ff3a1a;
+  }
+
+  .footer {
+    margin-top: 60px;
+    font-size: 0.9em;
+    color: #bbb;
+  }
+
+  .footer a {
+    color: #ff4b2b;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
 <body>
-  <h1>Iniciar sesión</h1>
 
-  <form id="loginForm">
-    <label for="username">Usuario:</label>
-    <input type="text" id="username" required><br><br>
+  <h1>🎮 Iniciar Sesión</h1>
+  <p>Accede a tu cuenta para disfrutar de todos nuestros juegos.</p>
 
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" required><br><br>
+  <div class="form-container">
+    <!-- Formulario de inicio de sesión -->
+    <form id="login-form" action="login_logic.php" method="POST">
+      <input type="text" name="username" placeholder="Nombre de usuario" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <button type="submit">Iniciar sesión</button>
+    </form>
 
-    <button type="submit">Iniciar sesión</button>
-  </form>
+    <!-- Enlace para registrarse -->
+    <p>No tienes cuenta? <a href="register.html">¡Regístrate aquí!</a></p>
+  </div>
 
-  <p id="errorMessage" style="color: red;"></p>
+  <div class="footer">
+    <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
+  </div>
 
-  <script>
-    // Datos de usuario predefinidos
-    const users = [
-      { username: 'usuario1', password: 'contraseña1' },
-      { username: 'usuario2', password: 'contraseña2' }
-    ];
-
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      let userFound = false;
-
-      // Verifica si el usuario y la contraseña coinciden
-      for (let i = 0; i < users.length; i++) {
-        if (users[i].username === username && users[i].password === password) {
-          userFound = true;
-          break;
-        }
-      }
-
-      if (userFound) {
-        // Si el usuario y la contraseña son correctos, se guarda en el localStorage
-        localStorage.setItem('userLoggedIn', true);
-        window.location.href = 'index.html'; // Redirige a la página principal
-      } else {
-        document.getElementById('errorMessage').textContent = 'Usuario o contraseña incorrectos';
-      }
-    });
-  </script>
 </body>
 </html>
-
