@@ -7,6 +7,16 @@
  <link rel="stylesheet" href="orientacion.css" />
   </head>
   <style>
+  <script>
+  if (!localStorage.getItem("loggedInUser")) {
+    window.location.href = "login.html";
+  }
+   function logout() {
+      localStorage.removeItem('userLoggedIn');
+      window.location.href = 'login.html'; // Redirige al login después de cerrar sesión
+    }
+</script>
+
     /* Animación de entrada con fade y deslizamiento */
     @keyframes fadeSlide {
       0% {
@@ -109,6 +119,7 @@
   </style>
 </head>
 <body>
+  
 
   <h1>🎮 Centro de Juegos de Scratch</h1>
   <p>Explora, piensa y ¡Disfruta mientras juegas!</p>
