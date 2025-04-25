@@ -1,99 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Iniciar sesión</title>
+  <meta charset="UTF-8">
+  <title>🔐 Iniciar sesión</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* Estilos generales para el login */
     body {
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff7e5f, # feb47b);
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      color: #333;
     }
-
-    .login-container {
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
+    .login-box {
+      background: rgba(255,255,255,0.9);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       text-align: center;
+      width: 320px;
     }
-
     h1 {
-      font-size: 2em;
       margin-bottom: 20px;
-      color: #ff4b2b;
+      font-size: 2em;
+      color: #ff7e5f;
     }
-
-    input[type="text"], input[type="password"] {
+    input {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       margin: 10px 0;
-      background-color: #222;
-      border: 1px solid #555;
-      border-radius: 5px;
-      color: white;
+      border: 2px solid #ddd;
+      border-radius: 6px;
       font-size: 1em;
     }
-
-    input[type="text"]:focus, input[type="password"]:focus {
-      border-color: #ff4b2b;
+    input:focus {
+      outline: none;
+      border-color: #ff7e5f;
     }
-
     button {
       width: 100%;
-      padding: 15px;
-      background-color: #ff4b2b;
-      color: white;
-      font-size: 1.2em;
+      padding: 12px;
+      margin-top: 15px;
+      background: #ff7e5f;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      color: white;
+      font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
-
     button:hover {
-      background-color: #ff3a1a;
+      background: #eb5a3c;
     }
-
-    .switch-links {
+    .switch {
       margin-top: 20px;
       font-size: 0.9em;
-      color: #bbb;
     }
-
-    .switch-links a {
-      color: #ff4b2b;
+    .switch a {
+      color: #ff7e5f;
       text-decoration: none;
     }
-
-    .switch-links a:hover {
+    .switch a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
-  <div class="login-container">
-    <h1>Iniciar sesión</h1>
-    <input type="text" id="username" placeholder="Correo electrónico" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <button onclick="login()">Iniciar sesión</button>
-
-    <div class="switch-links">
-      <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+  <div class="login-box">
+    <h1>🔐 Iniciar sesión</h1>
+    <input type="text"   id="username"     placeholder="👤 Usuario" />
+    <input type="password" id="password"     placeholder="🔒 Contraseña" />
+    <button onclick="login()">🔑 Entrar</button>
+    <div class="switch">
+      ¿No tienes cuenta? <a href="register.html">📝 Regístrate</a>
     </div>
   </div>
-
   <script src="auth.js"></script>
 </body>
 </html>
-
 
