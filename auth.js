@@ -49,6 +49,8 @@ function registrarUsuario() {
       alert("Error al registrar. Intenta nuevamente.");
     });
 }
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
 // Función para cerrar sesión
 function logout() {
