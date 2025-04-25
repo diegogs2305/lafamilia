@@ -1,33 +1,27 @@
-// Redirección si ya está logueado
-if (localStorage.getItem("loggedInUser")) {
-  window.location.href = "index.html";
+// Guardar usuario nuevo
+function register() {
+  const username = document.getElementById("newUsername").value;
+  const password = document.getElementById("newPassword").value;
+
+  if (username && password) {
+    localStorage.setItem("user_" + username, password);
+    alert("Usuario registrado correctamente");
+    window.location.href = "login.html";
+  } else {
+    alert("Por favor, completa todos los campos");
+  }
 }
 
-// Registro
-document.getElementById("registerForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const user = document.getElementById("newUsername").value;
-  const pass = document.getElementById("newPassword").value;
+// Iniciar sesión
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-  if (localStorage.getItem(user)) {
-    alert("¡Ese usuario ya existe!");
+  const savedPassword = localStorage.getItem("user_" + username);
+  if (password === savedPassword) {
+    localStorage.setItem("userLoggedIn", "true");
+    window.location.href = "index.html"; // Redirige al centro de juegos
   } else {
-    localStorage.setItem(user, pass);
-    alert("¡Registrado con éxito! Ahora puedes iniciar sesión.");
+    alert("Usuario o contraseña incorrectos");
   }
-});
-
-// Login
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
-
-  const storedPass = localStorage.getItem(user);
-  if (storedPass === pass) {
-    localStorage.setItem("loggedInUser", user);
-    window.location.href = "index.html";
-  } else {
-    alert("Usuario o contraseña incorrectos.");
-  }
-});
+}
