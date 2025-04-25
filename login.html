@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registrarse</title>
+  <title>Iniciar sesión</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #121212;
+      background: #1f1f1f;
       color: #fff;
       text-align: center;
       padding-top: 100px;
@@ -21,15 +21,15 @@
       width: 250px;
     }
     button {
-      background-color: #4caf50;
+      background-color: #ff4b2b;
       color: white;
       cursor: pointer;
     }
     button:hover {
-      background-color: #3d8b40;
+      background-color: #e04323;
     }
     a {
-      color: #4caf50;
+      color: #ff4b2b;
       display: block;
       margin-top: 15px;
       text-decoration: none;
@@ -37,12 +37,14 @@
   </style>
 </head>
 <body>
-  <h1>Registro</h1>
-  <input type="text" id="newUsername" placeholder="Nuevo usuario"><br>
-  <input type="password" id="newPassword" placeholder="Nueva contraseña"><br>
-  <button onclick="register()">Registrarse</button>
-  <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
+  <h1>Iniciar sesión</h1>
+  <input type="text" id="username" placeholder="Usuario"><br>
+  <input type="password" id="password" placeholder="Contraseña"><br>
+  <button onclick="login()">Entrar</button>
+  <a href="register.html">¿No tienes cuenta? Regístrate</a>
 
+  <!-- Asegúrate de que el script esté aquí, al final del body -->
   <script src="auth.js"></script>
 </body>
 </html>
+
