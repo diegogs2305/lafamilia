@@ -1,98 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Registro - Centro de Juegos</title>
+  <meta charset="UTF-8">
+  <title>🖊️ Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      color: #fff;
     }
-
-    .register-container {
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
+    .register-box {
+      background: rgba(0,0,0,0.6);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       text-align: center;
+      width: 320px;
     }
-
     h1 {
-      font-size: 2em;
       margin-bottom: 20px;
-      color: #ff4b2b;
+      font-size: 2em;
+      color: #43cea2;
     }
-
-    input[type="text"], input[type="password"], input[type="email"] {
+    input {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       margin: 10px 0;
-      background-color: #222;
-      border: 1px solid #555;
-      border-radius: 5px;
-      color: white;
+      border: 2px solid #555;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
       font-size: 1em;
     }
-
-    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
-      border-color: #ff4b2b;
+    input:focus {
+      outline: none;
+      border-color: #43cea2;
     }
-
     button {
       width: 100%;
-      padding: 15px;
-      background-color: #ff4b2b;
-      color: white;
-      font-size: 1.2em;
+      padding: 12px;
+      margin-top: 15px;
+      background: #43cea2;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      color: white;
+      font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
-
     button:hover {
-      background-color: #ff3a1a;
+      background: #37b88b;
     }
-
-    .switch-links {
+    .switch {
       margin-top: 20px;
       font-size: 0.9em;
-      color: #bbb;
     }
-
-    .switch-links a {
-      color: #ff4b2b;
+    .switch a {
+      color: #43cea2;
       text-decoration: none;
     }
-
-    .switch-links a:hover {
+    .switch a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
-  <div class="register-container">
-    <h1>Regístrate</h1>
-    <input type="text" id="username" placeholder="Nombre de usuario" />
-    <input type="email" id="email" placeholder="Correo electrónico" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" />
-    <button onclick="register()">Registrarse</button>
-
-    <div class="switch-links">
-      <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+  <div class="register-box">
+    <h1>🖊️ Regístrate</h1>
+    <input type="text"     id="username"        placeholder="👤 Nombre de usuario" />
+    <input type="email"    id="email"           placeholder="📧 Correo electrónico" />
+    <input type="password" id="password"        placeholder="🔒 Contraseña" />
+    <input type="password" id="confirmPassword" placeholder="🔒 Repite contraseña" />
+    <button onclick="register()">🚀 Registrarme</button>
+    <div class="switch">
+      ¿Ya tienes cuenta? <a href="login.html">🔐 Iniciar sesión</a>
     </div>
   </div>
-
   <script src="auth.js"></script>
 </body>
 </html>
