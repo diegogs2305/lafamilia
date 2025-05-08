@@ -2,30 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bienvenido | Centro de Juegos de Diego</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bienvenido a La Plataforma</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body, html {
       height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
     }
 
-    video#bg-video {
+    video {
       position: fixed;
-      top: 0;
-      left: 0;
+      right: 0;
+      bottom: 0;
       min-width: 100%;
       min-height: 100%;
-      object-fit: cover;
       z-index: -1;
-      filter: brightness(0.4);
+      object-fit: cover;
+      filter: brightness(0.4) saturate(1.2);
     }
 
     .glass-container {
@@ -35,91 +35,66 @@
       transform: translate(-50%, -50%);
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 40px 60px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
       text-align: center;
+      width: 90%;
+      max-width: 500px;
       color: white;
-      animation: fadeIn 2s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1.5s ease-in-out;
     }
 
     h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: cyan;
+      text-shadow: 0 0 10px #00ffff;
     }
 
     p {
       font-size: 1.2em;
       margin-bottom: 30px;
-      color: #e0e0e0;
     }
 
     .btn {
-      padding: 15px 30px;
+      display: inline-block;
       margin: 10px;
+      padding: 12px 30px;
       font-size: 1em;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
       font-weight: bold;
-      transition: all 0.3s ease;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #00f0ff, #007bff);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
     }
 
     .btn:hover {
-      background: linear-gradient(to right, #0072ff, #00c6ff);
-      transform: scale(1.05);
-    }
-
-    .icon {
-      font-size: 60px;
-      margin-bottom: 20px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
+      transform: scale(1.08);
+      box-shadow: 0 0 15px #00f0ff;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      .glass-container {
-        width: 90%;
-        padding: 30px 20px;
-      }
-      h1 {
-        font-size: 2em;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-
-  <video autoplay muted loop id="bg-video">
-    <source src="fondo.mp4" type="video/mp4">
+  <video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-digital-glow-8240/1080p.mp4" type="video/mp4">
     Tu navegador no soporta el video de fondo.
   </video>
 
   <div class="glass-container">
-    <div class="icon">🚀</div>
-    <h1>Centro de Juegos</h1>
-    <p>Explora una nueva dimensión de diversión. Entra a tu cuenta y sumérgete en el universo creativo de Diego G.S.</p>
-    <button class="btn" onclick="location.href='login.html'">🔐 Iniciar sesión</button>
-    <button class="btn" onclick="location.href='register.html'">📝 Registrarse</button>
+    <h1>Bienvenido</h1>
+    <p>Explora, juega y descubre lo que he creado. Tecnología, creatividad y juegos en un solo lugar.</p>
+    <a class="btn" href="login.html">Iniciar sesión</a>
+    <a class="btn" href="register.html">Registrarse</a>
   </div>
-
 </body>
 </html>
 
