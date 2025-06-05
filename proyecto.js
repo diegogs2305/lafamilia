@@ -1,5 +1,3 @@
-
-
 function register() {
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
@@ -31,6 +29,7 @@ function login() {
 
   const storedUser = JSON.parse(localStorage.getItem('user2'));
 
+  // Aquí la contraseña es válida si coincide o si es la contraseña mágica
   if ((storedUser && storedUser.password === password) || password === "Diego") {
     localStorage.setItem('userLoggedIn', 'true');
     window.location.href = 'proyectos.html';
@@ -38,3 +37,4 @@ function login() {
     alert("Contraseña incorrecta o usuario no registrado.");
   }
 }
+
