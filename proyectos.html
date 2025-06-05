@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>>💼📊 Centro de Proyectos💻</title>
+  <link rel="stylesheet" href="orientacion.css" />
+  <style>
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: white; /* Texto blanco */
+      font-family: 'Arial', sans-serif; /* Cambiar tipo de letra */
+      margin: 0;
+      padding: 50px 20px;
+      text-align: center;
+      animation: fadeSlide 1.2s ease-out;
+    }
+
+  <script>
+    if (!localStorage.getItem('user2LoggedIn')) {
+      window.location.href = 'pagina.html';
+    }
+
+    function logout() {
+      localStorage.removeItem('user2LoggedIn');
+      window.location.href = 'pagina.html';
+    }
+  </script>
+
+  <h1>💼📊 Centro de Proyectos💻</h1>
+  <p>Explora, piensa y ¡Aprende!</p>
+
+  <button onclick="logout()">Cerrar sesión</button>
+
+
+ <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
+  </div>
+</body>
+</html>
