@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>>💼📊 Centro de Proyectos💻</title>
+  <title>💼📊 Centro de Proyectos💻</title>
   <link rel="stylesheet" href="orientacion.css" />
   <style>
     @keyframes fadeSlide {
@@ -13,8 +13,8 @@
 
     body {
       background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      color: white; /* Texto blanco */
-      font-family: 'Arial', sans-serif; /* Cambiar tipo de letra */
+      color: white;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 50px 20px;
       text-align: center;
@@ -50,9 +50,13 @@
       animation: fadeSlide 1.6s ease-out forwards;
       opacity: 0;
     }
-
+  </style>
   <script>
-    if (!localStorage.getItem('userLoggedIn')) {
+    // Verificamos si hay sesión iniciada para 'user2'
+    const isLoggedIn = localStorage.getItem('userLoggedIn');
+    const storedUser = localStorage.getItem('user2');
+
+    if (!isLoggedIn || !storedUser) {
       window.location.href = 'pagina.html';
     }
 
@@ -61,14 +65,16 @@
       window.location.href = 'pagina.html';
     }
   </script>
-
+</head>
+<body>
   <h1>💼📊 Centro de Proyectos💻</h1>
   <p>Explora, piensa y ¡Aprende!</p>
 
   <button onclick="logout()">Cerrar sesión</button>
 
+  <!-- Aquí podrías añadir tu .game-grid con tus juegos o apps -->
 
- <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
-  </div>
+  <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
 </body>
 </html>
+
