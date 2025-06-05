@@ -1,4 +1,4 @@
-// auth.js
+
 
 // Función para registrar al usuario
 function register() {
