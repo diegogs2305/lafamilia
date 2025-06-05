@@ -1,27 +1,24 @@
 
 
-// Función para registrar al usuario
 function register() {
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
 
-  if (password !== confirmPassword) {
-    alert("Las contraseñas no coinciden");
-    return;
-  }
-
-  if (!password) {
+  if (!password || !confirmPassword) {
     alert("Por favor, completa todos los campos.");
     return;
   }
 
-  const user2 = {
-    password: password
-  };
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no coinciden.");
+    return;
+  }
 
-  localStorage.setItem('user2', JSON.stringify(user2)); // 👈 Aquí guardas correctamente como 'user2'
+  const user2 = { password };
+
+  localStorage.setItem('user2', JSON.stringify(user2));
   alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-  window.location.href = 'inicio_proyectos.html'; // ✅ Quitado el punto extra
+  window.location.href = 'inicio_proyectos.html';
 }
 
 function login() {
@@ -35,7 +32,7 @@ function login() {
   const storedUser = JSON.parse(localStorage.getItem('user2'));
 
   if (storedUser && storedUser.password === password) {
-    localStorage.setItem('userLoggedIn', true);
+    localStorage.setItem('userLoggedIn', 'true');
     window.location.href = 'proyectos.html';
   } else {
     alert("Contraseña incorrecta o usuario no registrado.");
