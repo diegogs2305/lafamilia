@@ -24,22 +24,20 @@ function register() {
   window.location.href = 'inicio_proyectos.html'; // ✅ Quitado el punto extra
 }
 
-// Función de login
 function login() {
   const password = document.getElementById('password').value;
 
   if (!password) {
-    alert("Por favor, ingresa todos los campos.");
+    alert("Por favor, ingresa la contraseña.");
     return;
   }
 
-  const storedUser = JSON.parse(localStorage.getItem('user2')); // 👈 Aquí también usas 'user2'
+  const storedUser = JSON.parse(localStorage.getItem('user2'));
 
   if (storedUser && storedUser.password === password) {
     localStorage.setItem('userLoggedIn', true);
     window.location.href = 'proyectos.html';
   } else {
-    alert("Usuario o contraseña incorrectos.");
+    alert("Contraseña incorrecta o usuario no registrado.");
   }
 }
-
