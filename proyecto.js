@@ -44,7 +44,7 @@ function login() {
   // Obtiene los datos del usuario registrado desde localStorage
   const storedUser = JSON.parse(localStorage.getItem('user2'));
 
-  if (storedUser && storedUser.username === username && storedUser.password === password) {
+  if (storedUser && storedUser.password === password) {
     localStorage.setItem('userLoggedIn', true);
     window.location.href = 'proyectos.html';
   } else {
