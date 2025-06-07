@@ -1,3 +1,4 @@
+// Función para registrar un usuario con contraseña
 function register() {
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
@@ -19,6 +20,7 @@ function register() {
   window.location.href = 'inicio_proyectos.html';
 }
 
+// Función para iniciar sesión
 function login() {
   const password = document.getElementById('password').value;
 
@@ -30,6 +32,7 @@ function login() {
   // Contraseña mágica válida siempre
   if (password === "Diego") {
     localStorage.setItem('userLoggedIn', 'true');
+    localStorage.setItem('user2', JSON.stringify({ password: "Diego", invitado: true }));
     window.location.href = 'proyectos.html';
     return;
   }
@@ -44,5 +47,9 @@ function login() {
   }
 }
 
-
-
+// Función para proteger la página proyectos.html
+function verificarAcceso() {
+  if (!localStorage.getItem('userLoggedIn')) {
+    window.location.href = 'inicio_proyectos.html';
+  }
+}
