@@ -27,14 +27,22 @@ function login() {
     return;
   }
 
-  const storedUser = JSON.parse(localStorage.getItem('user'));
+  // Contraseña mágica válida siempre
+  if (password === "Diego") {
+    localStorage.setItem('userLoggedIn', 'true');
+    window.location.href = 'proyectos.html';
+    return;
+  }
 
-  // Aquí la contraseña es válida si coincide o si es la contraseña mágica
-  if ((storedUser && storedUser.password === password) || password === "Diego") {
+  const storedUser = JSON.parse(localStorage.getItem('user2'));
+
+  if (storedUser && storedUser.password === password) {
     localStorage.setItem('userLoggedIn', 'true');
     window.location.href = 'proyectos.html';
   } else {
     alert("Contraseña incorrecta o usuario no registrado.");
   }
 }
+
+
 
