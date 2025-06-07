@@ -49,7 +49,8 @@
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       animation: fadeSlide 1.6s ease-out forwards;
       opacity: 0;
-      card:hover {
+    }
+    .card:hover {
       transform: scale(1.07);
       box-shadow: 0 10px 30px rgba(255, 75, 43, 0.6);
     }
@@ -86,8 +87,8 @@
       margin-bottom: 15px;
       color: #ff4b2b;
     }
-    }
-     button {
+
+    button {
       background: #ff4b2b;
       border: none;
       padding: 10px 20px;
@@ -104,17 +105,23 @@
     }
   </style>
   <script>
-    // Verificamos si hay sesión iniciada para 'user2'
-    const isLoggedIn = localStorage.getItem('userLoggedIn');
-    const storedUser = localStorage.getItem('user');
-
-    if (!isLoggedIn || !storedUser) {
-      window.location.href = 'pagina.html';
+    // Función para verificar sesión y proteger la página
+    function verificarAcceso() {
+      const isLoggedIn = localStorage.getItem('userLoggedIn');
+      const storedUser = localStorage.getItem('user2');
+      if (!isLoggedIn || !storedUser) {
+        window.location.href = 'inicio_proyectos.html'; // Redirige al login
+      }
     }
 
+    // Ejecutar verificación al cargar
+    window.onload = verificarAcceso;
+
+    // Función para cerrar sesión
     function logout() {
       localStorage.removeItem('userLoggedIn');
-      window.location.href = 'pagina.html';
+      localStorage.removeItem('user2');
+      window.location.href = 'inicio_proyectos.html';
     }
   </script>
 </head>
@@ -125,16 +132,15 @@
   <button onclick="logout()">Cerrar sesión</button>
 
   <!-- Aquí podrías añadir tu .game-grid con tus juegos o apps -->
-<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAGoqUFJzcQ/Ylw6dQTf8ptXpE6C9BGx1w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGoqUFJzcQ&#x2F;Ylw6dQTf8ptXpE6C9BGx1w&#x2F;view?utm_content=DAGoqUFJzcQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Cristóbal Colón </a> de Diego GS  
+  <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+    border-radius: 8px; will-change: transform;">
+    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+      src="https://www.canva.com/design/DAGoqUFJzcQ/Ylw6dQTf8ptXpE6C9BGx1w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+    </iframe>
+  </div>
+  <a href="https://www.canva.com/design/DAGoqUFJzcQ/Ylw6dQTf8ptXpE6C9BGx1w/view?utm_content=DAGoqUFJzcQ&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Cristóbal Colón </a> de Diego GS  
 
   <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
 </body>
 </html>
-
