@@ -12,9 +12,9 @@ function register() {
     return;
   }
 
-  const user2 = { password };
+  const user = { password };
 
-  localStorage.setItem('user2', JSON.stringify(user2));
+  localStorage.setItem('user2', JSON.stringify(user));
   alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
   window.location.href = 'inicio_proyectos.html';
 }
@@ -27,7 +27,7 @@ function login() {
     return;
   }
 
-  const storedUser = JSON.parse(localStorage.getItem('user2'));
+  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   // Aquí la contraseña es válida si coincide o si es la contraseña mágica
   if ((storedUser && storedUser.password === password) || password === "Diego") {
