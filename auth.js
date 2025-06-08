@@ -7,36 +7,40 @@ function register() {
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
 
-  // Verifica que las contraseñas coincidan
-  if (password !== confirmPassword) {
-    alert("Las contraseñas no coinciden");
-    return;
-  }
-
-  // Verifica que los campos no estén vacíos
   if (!username || !email || !password) {
     alert("Por favor, completa todos los campos.");
     return;
   }
 
-  // Verifica que el correo electrónico sea válido
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   if (!emailRegex.test(email)) {
     alert("Por favor, ingresa un correo electrónico válido.");
     return;
   }
 
-  // Guardamos los datos del usuario en el localStorage
-  const user = {
-    username: username,
-    email: email,
-    password: password
-  };
+  if (password.length < 6) {
+    alert("La contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
 
-  localStorage.setItem('user', JSON.stringify(user));
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
+
+  const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+  const userExists = storedUsers.find(user => user.username === username);
+
+  if (userExists) {
+    alert("Este nombre de usuario ya está registrado.");
+    return;
+  }
+
+  const newUser = { username, email, password };
+  storedUsers.push(newUser);
+  localStorage.setItem('users', JSON.stringify(storedUsers));
+
   alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-
-  // Redirige a la página de login
   window.location.href = 'login.html';
 }
 
@@ -45,19 +49,32 @@ function login() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  // Verifica que los campos no estén vacíos
   if (!username || !password) {
     alert("Por favor, ingresa todos los campos.");
     return;
   }
 
-  // Obtiene los datos del usuario registrado desde localStorage
-  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+  const user = storedUsers.find(user => user.username === username && user.password === password);
 
-  if (storedUser && storedUser.username === username && storedUser.password === password) {
-    localStorage.setItem('userLoggedIn', true);
+  if (user) {
+    localStorage.setItem('userLoggedIn', JSON.stringify(user));
     window.location.href = 'index.html';
   } else {
     alert("Usuario o contraseña incorrectos.");
+  }
+}
+
+// Función para cerrar sesión
+function logout() {
+  localStorage.removeItem('userLoggedIn');
+  window.location.href = 'login.html';
+}
+
+// Función para verificar si hay sesión activa
+function checkSession() {
+  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+  if (!user) {
+    window.location.href = 'login.html';
   }
 }
