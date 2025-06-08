@@ -36,7 +36,7 @@
     }
     input[type="password"], input[type="text"] {
       width: 100%;
-      padding: 12px 40px 12px 12px; /* espacio para el ojo */
+      padding: 12px 40px 12px 12px;
       border: 2px solid #ddd;
       border-radius: 6px;
       font-size: 1em;
@@ -96,11 +96,16 @@
     });
 
     function login() {
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
-      if (password === 'diego123' || password === 'Diego') {
+      const storedUserStr = localStorage.getItem('user2');
+      const storedUser = storedUserStr ? JSON.parse(storedUserStr) : null;
+
+      // Validar si la contraseña es la registrada o la contraseña mágica "Diego"
+      if ((storedUser && storedUser.password === password) || password === "Diego") {
+        localStorage.setItem('userLoggedIn', 'true');
         alert('¡Acceso concedido!');
-        window.location.href = 'zona_de_proyectos.html';
+        window.location.href = 'zona_de_proyectos.html'; // O la página que quieras
       } else {
         alert('Contraseña incorrecta, intenta de nuevo.');
       }
