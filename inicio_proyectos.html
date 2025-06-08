@@ -19,7 +19,7 @@
     .login-box {
       background: rgba(255,255,255,0.9);
       padding: 40px 60px;
-      border-radius: 1px;
+      border-radius: 6px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       text-align: center;
       width: 320px;
@@ -97,10 +97,9 @@
 
     function login() {
       const password = passwordInput.value;
-      // Aquí pones la contraseña que quieras para validar, por ejemplo "diego123"
-      if (password === 'diego123') {
+
+      if (password === 'diego123' || password === 'Diego') {
         alert('¡Acceso concedido!');
-        // Redirige a la página de proyectos o lo que quieras
         window.location.href = 'zona_de_proyectos.html';
       } else {
         alert('Contraseña incorrecta, intenta de nuevo.');
