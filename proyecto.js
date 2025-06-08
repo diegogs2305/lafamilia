@@ -54,16 +54,15 @@ function verificarAcceso() {
   }
 }
 
-// Función para mostrar/ocultar contraseña con icono de ojo
-function togglePasswordVisibility() {
+// Función para mostrar/ocultar la contraseña
+function togglePassword() {
   const passwordInput = document.getElementById('password');
-  const toggleIcon = document.getElementById('togglePasswordIcon');
-
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    toggleIcon.textContent = '🙈';  // Ojo cerrado cuando la contraseña está visible
+  const eyeIcon = document.getElementById('toggleEye');
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    eyeIcon.textContent = "🙈"; // Cambia icono a "ojo cerrado"
   } else {
-    passwordInput.type = 'password';
-    toggleIcon.textContent = '👁️';  // Ojo abierto cuando la contraseña está oculta
+    passwordInput.type = "password";
+    eyeIcon.textContent = "👁️"; // Cambia icono a "ojo abierto"
   }
 }
