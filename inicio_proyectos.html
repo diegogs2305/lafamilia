@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title> 🔐BIENVENIDO A LA ZONA DE PROYECTOS DE DIEGO G.S  </title>
+  <title>🔐 BIENVENIDO A LA ZONA DE PROYECTOS DE DIEGO G.S</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <meta charset="UTF-8">
- 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       margin: 0;
@@ -30,25 +26,35 @@
     }
     h1 {
       margin-bottom: 20px;
-      font-size: 2em;
+      font-size: 1.8em;
       color: #ff7e5f;
     }
-    h2 {
-      margin-bottom: 600px;
-      font-size: 2em;
-      color: #ff7e5f;
-    }
-    input {
+    .password-container {
+      position: relative;
       width: 100%;
-      padding: 12px;
-      margin: 12px 0;
+      margin-bottom: 15px;
+    }
+    input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px 40px 12px 12px; /* espacio para el ojo */
       border: 2px solid #ddd;
       border-radius: 6px;
       font-size: 1em;
+      box-sizing: border-box;
     }
     input:focus {
       outline: none;
       border-color: #ff7e5f;
+    }
+    #togglePassword {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      user-select: none;
+      font-size: 20px;
+      color: #ff7e5f;
     }
     button {
       width: 100%;
@@ -65,28 +71,42 @@
     button:hover {
       background: #eb5a3c;
     }
-    .switch {
-      margin-top: 20px;
-      font-size: 0.9em;
-    }
-    .switch a {
-      color: #ff7e5f;
-      text-decoration: none;
-    }
-    .switch a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  
   <div class="login-box">
-    <h1>🔐BIENVENIDO AL INICO DE SESIÓN PARA ACCEDER A LA ZONA DE PROYECTOS DE DIEGO G.S </h1>
-    <input type="password" id="password"     placeholder="🔒 Contraseña" />
-    <button onclick="login()">🔑 Entrar</button>
-    <div class="switch">
+    <h1>🔐 BIENVENIDO AL INICIO DE SESIÓN PARA ACCEDER A LA ZONA DE PROYECTOS DE DIEGO G.S</h1>
+    
+    <div class="password-container">
+      <input type="password" id="password" placeholder="🔒 Contraseña" />
+      <span id="togglePassword">👁️</span>
     </div>
+    
+    <button onclick="login()">🔑 Entrar</button>
   </div>
-  <script src="proyecto.js"></script>
+
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    function login() {
+      const password = passwordInput.value;
+      // Aquí pones la contraseña que quieras para validar, por ejemplo "diego123"
+      if (password === 'diego123') {
+        alert('¡Acceso concedido!');
+        // Redirige a la página de proyectos o lo que quieras
+        window.location.href = 'zona_de_proyectos.html';
+      } else {
+        alert('Contraseña incorrecta, intenta de nuevo.');
+      }
+    }
+  </script>
 </body>
 </html>
+
