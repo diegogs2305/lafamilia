@@ -112,6 +112,16 @@
     button:hover {
       background: #ff3a1a;
     }
+
+    /* Estilo para el reloj */
+    #reloj {
+      font-family: 'Arial', sans-serif;
+      font-size: 1.5em;
+      color: #ff4b2b;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff4b2b;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -125,6 +135,9 @@
       window.location.href = 'pagina.html';
     }
   </script>
+
+  <!-- Reloj en vivo -->
+  <div id="reloj"></div>
 
   <h1>🎮 Centro de Juegos de Scratch y de Inteligencia Artificial💻</h1>
   <p>Explora, piensa y ¡Disfruta mientras juegas!</p>
@@ -197,10 +210,22 @@
   📲 Descarga mi App aqui
 </a>
 
-
   <p style="margin-top: 40px;"><a href="https://bit.ly/m/lafamilia" target="_blank">Visita La Familia</a></p>
  <p>Hecho con estilo y creatividad por Diego G.S ✨</p>
   </div>
+
+  <script>
+    function actualizarReloj() {
+      const ahora = new Date();
+      const horas = String(ahora.getHours()).padStart(2, '0');
+      const minutos = String(ahora.getMinutes()).padStart(2, '0');
+      const segundos = String(ahora.getSeconds()).padStart(2, '0');
+      const horaFormateada = `${horas}:${minutos}:${segundos}`;
+      document.getElementById('reloj').textContent = horaFormateada;
+    }
+    actualizarReloj(); // Mostrar reloj inmediatamente
+    setInterval(actualizarReloj, 1000); // Actualizar cada segundo
+  </script>
 </body>
 </html>
 
