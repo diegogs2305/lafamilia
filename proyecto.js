@@ -54,15 +54,3 @@ function verificarAcceso() {
   }
 }
 
-// Función para mostrar/ocultar la contraseña
-function togglePassword() {
-  const passwordInput = document.getElementById('password');
-  const eyeIcon = document.getElementById('toggleEye');
-  if (passwordInput.type === "password") {
-    passwordInput.type = "text";
-    eyeIcon.textContent = "🙈"; // Cambia icono a "ojo cerrado"
-  } else {
-    passwordInput.type = "password";
-    eyeIcon.textContent = "👁️"; // Cambia icono a "ojo abierto"
-  }
-}
