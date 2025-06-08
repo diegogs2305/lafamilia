@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🔐 Registro e Inicio - Diego G.S</title>
+  <title>🔐 Inicio de Sesión</title>
   <style>
     body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: white;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fbd72b, #f6871f, #f9484a);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,95 +16,61 @@
       margin: 0;
     }
     .container {
-      background: rgba(255,255,255,0.95);
-      padding: 30px;
-      border-radius: 10px;
+      background: #1c1c1c;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255,75,43,0.7);
       width: 320px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
       text-align: center;
     }
-    input {
+    h2 {
+      margin-bottom: 20px;
+      color: #ff4b2b;
+    }
+    input[type="password"] {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: none;
       font-size: 1em;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
     }
     button {
-      background: #ff7e5f;
+      background: #ff4b2b;
       border: none;
       padding: 12px;
       width: 100%;
+      border-radius: 10px;
       color: white;
+      font-weight: bold;
       font-size: 1em;
-      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 10px;
+      transition: background 0.3s ease;
     }
     button:hover {
-      background: #eb5a3c;
-    }
-    h2 {
-      margin-bottom: 15px;
-      color: #ff4b2b;
+      background: #ff3a1a;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Registro</h2>
+    <h2>Iniciar Sesión</h2>
     <input type="password" id="password" placeholder="Contraseña" />
-    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" />
-    <button onclick="register()">Registrarse</button>
-
-    <hr />
-
-    <h2>Inicio de sesión</h2>
-    <input type="password" id="loginPassword" placeholder="Contraseña" />
     <button onclick="login()">Entrar</button>
   </div>
 
   <script>
-    function register() {
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
-      if (!password || !confirmPassword) {
-        alert("Por favor, completa todos los campos.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden.");
-        return;
-      }
-
-      const user = { password };
-
-      localStorage.setItem('user2', JSON.stringify(user));
-      alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-      
-      // Opcional: limpiar campos
-      document.getElementById('password').value = '';
-      document.getElementById('confirmPassword').value = '';
-    }
-
     function login() {
-      const password = document.getElementById('loginPassword').value;
+      const password = document.getElementById('password').value.trim();
 
       if (!password) {
         alert("Por favor, ingresa la contraseña.");
         return;
       }
 
-      // Contraseña mágica
       if (password === "Diego") {
         localStorage.setItem('userLoggedIn', 'true');
         localStorage.setItem('user2', JSON.stringify({ password: "Diego", invitado: true }));
-        alert("¡Acceso concedido como invitado!");
         window.location.href = 'proyectos.html';
         return;
       }
@@ -112,7 +79,6 @@
 
       if (storedUser && storedUser.password === password) {
         localStorage.setItem('userLoggedIn', 'true');
-        alert("¡Acceso concedido!");
         window.location.href = 'proyectos.html';
       } else {
         alert("Contraseña incorrecta o usuario no registrado.");
@@ -121,3 +87,4 @@
   </script>
 </body>
 </html>
+
