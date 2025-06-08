@@ -1,116 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>🔐 BIENVENIDO A LA ZONA DE PROYECTOS DE DIEGO G.S</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🔐 Registro e Inicio - Diego G.S</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #fbd72b, #f6871f, #f9484a);
-      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #333;
+      margin: 0;
     }
-    .login-box {
-      background: rgba(255,255,255,0.9);
-      padding: 40px 60px;
-      border-radius: 6px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      text-align: center;
+    .container {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 10px;
       width: 320px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+      text-align: center;
     }
-    h1 {
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      color: #ff7e5f;
-    }
-    .password-container {
-      position: relative;
+    input {
       width: 100%;
-      margin-bottom: 15px;
-    }
-    input[type="password"], input[type="text"] {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1em;
       border: 2px solid #ddd;
       border-radius: 6px;
-      font-size: 1em;
       box-sizing: border-box;
     }
-    input:focus {
-      outline: none;
-      border-color: #ff7e5f;
-    }
-    #togglePassword {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      user-select: none;
-      font-size: 20px;
-      color: #ff7e5f;
-    }
     button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
       background: #ff7e5f;
       border: none;
-      border-radius: 6px;
+      padding: 12px;
+      width: 100%;
       color: white;
       font-size: 1em;
+      border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: 10px;
     }
     button:hover {
       background: #eb5a3c;
     }
+    h2 {
+      margin-bottom: 15px;
+      color: #ff4b2b;
+    }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h1>🔐 BIENVENIDO AL INICIO DE SESIÓN PARA ACCEDER A LA ZONA DE PROYECTOS DE DIEGO G.S</h1>
-    
-    <div class="password-container">
-      <input type="password" id="password" placeholder="🔒 Contraseña" />
-      <span id="togglePassword">👁️</span>
-    </div>
-    
-    <button onclick="login()">🔑 Entrar</button>
+  <div class="container">
+    <h2>Registro</h2>
+    <input type="password" id="password" placeholder="Contraseña" />
+    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" />
+    <button onclick="register()">Registrarse</button>
+
+    <hr />
+
+    <h2>Inicio de sesión</h2>
+    <input type="password" id="loginPassword" placeholder="Contraseña" />
+    <button onclick="login()">Entrar</button>
   </div>
 
   <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
+    function register() {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
 
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
-    });
+      if (!password || !confirmPassword) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      const user = { password };
+
+      localStorage.setItem('user2', JSON.stringify(user));
+      alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      
+      // Opcional: limpiar campos
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
+    }
 
     function login() {
-      const password = passwordInput.value.trim();
+      const password = document.getElementById('loginPassword').value;
 
-      const storedUserStr = localStorage.getItem('user2');
-      const storedUser = storedUserStr ? JSON.parse(storedUserStr) : null;
+      if (!password) {
+        alert("Por favor, ingresa la contraseña.");
+        return;
+      }
 
-      // Validar si la contraseña es la registrada o la contraseña mágica "Diego"
-      if ((storedUser && storedUser.password === password) || password === "Diego") {
+      // Contraseña mágica
+      if (password === "Diego") {
         localStorage.setItem('userLoggedIn', 'true');
-        alert('¡Acceso concedido!');
-        window.location.href = 'proyectos.html'; // O la página que quieras
+        localStorage.setItem('user2', JSON.stringify({ password: "Diego", invitado: true }));
+        alert("¡Acceso concedido como invitado!");
+        window.location.href = 'proyectos.html';
+        return;
+      }
+
+      const storedUser = JSON.parse(localStorage.getItem('user2'));
+
+      if (storedUser && storedUser.password === password) {
+        localStorage.setItem('userLoggedIn', 'true');
+        alert("¡Acceso concedido!");
+        window.location.href = 'proyectos.html';
       } else {
-        alert('Contraseña incorrecta, intenta de nuevo.');
+        alert("Contraseña incorrecta o usuario no registrado.");
       }
     }
   </script>
 </body>
 </html>
-
