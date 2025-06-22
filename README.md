@@ -10,3 +10,7 @@ Explora, aprende y diviértete con juegos como **Pin Pon**, **Save the Frog**, *
 - Asistente virtual incluido.
 - Animaciones suaves y diseño moderno.
 - Preparado para correr en servidor local con Python.
+- Chatbot y aplicación de La Familia
+- Descargar mi app para Android 
+
+La web está en constante mejora para ofrecer un servicio excelente y de calidad.
