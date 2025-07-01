@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Turnos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 4rem;
+      color: #333;
+    }
+    #turno {
+      font-size: 8rem;
+      margin: 40px 0;
+      color: #007bff;
+    }
+    button {
+      font-size: 2rem;
+      padding: 20px 40px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Turno actual</h1>
+  <div id="turno">0</div>
+  <button onclick="siguienteTurno()">➡️ Siguiente turno</button>
+
+  <script>
+    let turno = 0;
+    const sonido = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+
+    function siguienteTurno() {
+      turno++;
+      document.getElementById('turno').innerText = turno;
+      sonido.play();
+    }
+  </script>
+</body>
+</html>
