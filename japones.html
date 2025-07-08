@@ -5,8 +5,29 @@
   frameborder="0">
 </iframe>
 <p>
-  Si quieres ver la tabla completa y poder editarla, 
-  <a href="https://docs.google.com/spreadsheets/d/13HVkeJ5ukwQz83ilYguuQdkS9YkQRO3A/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-    pulsa aquí
-  </a>.
+  Para editar la hoja desde tu móvil necesitas la app <strong>Hojas de cálculo de Google</strong>.
 </p>
+
+<p>
+  <a href="https://docs.google.com/spreadsheets/d/13HVkeJ5ukwQz83ilYguuQdkS9YkQRO3A/edit" target="_blank">
+    Pulsa aquí si ya la tienes instalada
+  </a>
+</p>
+
+<p id="descargar"></p>
+
+<script>
+  // Detectar sistema operativo
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  let mensaje = "";
+  if (/android/i.test(userAgent)) {
+    mensaje = '<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.docs.editors.sheets" target="_blank">Descarga la app desde Google Play</a>';
+  } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    mensaje = '<a href="https://apps.apple.com/app/google-sheets/id842849113" target="_blank">Descarga la app desde App Store</a>';
+  } else {
+    mensaje = 'Estás usando un ordenador o un sistema no compatible.';
+  }
+
+  document.getElementById("descargar").innerHTML = mensaje;
+</script>
