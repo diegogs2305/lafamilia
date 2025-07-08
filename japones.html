@@ -4,20 +4,39 @@
   height="600" 
   frameborder="0">
 </iframe>
-<p>
-  Para editar la hoja desde tu móvil necesitas la app <strong>Hojas de cálculo de Google</strong>.
-</p>
+<style>
+  .texto-app {
+    font-size: 18px; /* Aumenta o reduce este valor según prefieras */
+    font-family: sans-serif;
+    line-height: 1.5;
+  }
 
-<p>
-  <a href="https://docs.google.com/spreadsheets/d/13HVkeJ5ukwQz83ilYguuQdkS9YkQRO3A/edit" target="_blank">
-    Pulsa aquí si ya la tienes instalada
-  </a>
-</p>
+  .texto-app a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
-<p id="descargar"></p>
+  .texto-app a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="texto-app">
+  <p>
+    Para editar la hoja desde tu móvil necesitas la app <strong>Hojas de cálculo de Google</strong>.
+  </p>
+
+  <p>
+    <a href="https://docs.google.com/spreadsheets/d/13HVkeJ5ukwQz83ilYguuQdkS9YkQRO3A/edit" target="_blank">
+      Pulsa aquí si ya la tienes instalada
+    </a>
+  </p>
+
+  <p id="descargar"></p>
+</div>
 
 <script>
-  // Detectar sistema operativo
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   let mensaje = "";
