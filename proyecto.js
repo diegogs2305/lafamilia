@@ -29,13 +29,26 @@ function login() {
     return;
   }
 
-  // Contraseña mágica válida siempre
-  if (password === "Diego") {
-    localStorage.setItem('userLoggedIn', 'true');
-    localStorage.setItem('user2', JSON.stringify({ password: "Diego", invitado: true }));
-    window.location.href = 'proyectos.html';
-    return;
-  }
+  // Diccionario de contraseñas mágicas y sus páginas de destino
+const magicPasswords = {
+  "Diego": "proyectos.html",
+  "Invitado123": "juegos.html",
+  "AccesoVIP": "vip.html",
+  "Fiesta2025": "eventos.html"
+};
+
+// Comprobamos si la contraseña introducida está en la lista
+if (magicPasswords.hasOwnProperty(password)) {
+  localStorage.setItem('userLoggedIn', 'true');
+  localStorage.setItem('user2', JSON.stringify({
+    invitado: true,
+    claveUsada: password
+  }));
+  
+  // Redirige a la página correspondiente
+  window.location.href = magicPasswords[password];
+  return;
+}
 
   const storedUser = JSON.parse(localStorage.getItem('user2'));
 
