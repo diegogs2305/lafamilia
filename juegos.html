@@ -156,11 +156,11 @@
   <script>
     if (!localStorage.getItem('userLoggedIn')) {
       window.location.href = 'pagina.html';
-    }
+er     }
 
     function logout() {
       localStorage.removeItem('userLoggedIn');
-      window.location.href = 'pagina.html';
+      window.location.href = 'index.html';
     }
   </script>
 
@@ -170,7 +170,7 @@
   <h1>🎮 Centro de Juegos de Scratch y de Inteligencia Artificial💻</h1>
   <p>Explora, piensa y ¡Disfruta mientras juegas!</p>
 
-  <button onclick="logout()">Cerrar sesión</button>
+  <button onclick="logout()">Volver al inicio</button>
 
   <div class="game-grid">
     <div class="card">
