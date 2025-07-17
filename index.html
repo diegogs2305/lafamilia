@@ -1,11 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Centro Principal</title>
 
-  <!-- Fuente elegante -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
@@ -20,20 +19,7 @@
 
     * {
       box-sizing: border-box;
-   button {
-  background: #ff4b2b;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-button:hover {
-  background: #ff3a1a;
-}
+    }
 
     body {
       margin: 0;
@@ -113,11 +99,10 @@ button:hover {
 
   <header>
     <h1>🎮 Bienvenido, Diego</h1>
-    
+    <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
   </header>
 
   <main class="grid-container">
-
     <div class="grid-item" onclick="location.href='juegos.html'">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6h-10c-2.21 0-4 1.79-4 4v4c0 2.21 1.79 4 4 4h1v2h2v-2h6v2h2v-2h1c2.21 0 4-1.79 4-4v-4c0-2.21-1.79-4-4-4zm-10 6c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
       <h2>Juegos</h2>
@@ -137,30 +122,21 @@ button:hover {
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4h-16c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2zm0 4l-8 5-8-5v-2l8 5 8-5v2z"/></svg>
       <h2>Contacto</h2>
     </div>
-
   </main>
 
-<script>
+  <script>
+    // Redirección si no está logueado
     if (!localStorage.getItem('userLoggedIn')) {
       window.location.href = 'pagina.html';
     }
 
+    // Función para cerrar sesión
     function logout() {
       localStorage.removeItem('userLoggedIn');
-      window.location.href = 'pagina.html';
-
-    
-  
-  function logout() {
-    localStorage.removeItem('userLoggedIn');
-    localStorage.removeItem('user2');
-    window.location.href = 'pagina.html'; // Cambia esto por tu página de inicio de sesión
-  }
-</script>
-
-
+      localStorage.removeItem('user2');
+      window.location.href = 'pagina.html'; // Cambia a tu página de login
+    }
+  </script>
 
 </body>
 </html>
-
- 
