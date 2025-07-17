@@ -100,7 +100,7 @@
 
   <header>
     <h1>🎮 Bienvenido, Diego</h1>
-    <button class="logout-btn" onclick="cerrarSesion()">Cerrar sesión</button>
+    <button onclick="logout()">Cerrar sesión</button>
   </header>
 
   <main class="grid-container">
@@ -135,8 +135,15 @@
     function logout() {
       localStorage.removeItem('userLoggedIn');
       window.location.href = 'pagina.html';
-    }
-  </script>
+
+    
+  
+  function logout() {
+    localStorage.removeItem('userLoggedIn');
+    localStorage.removeItem('user2');
+    window.location.href = 'pagina.html'; // Cambia esto por tu página de inicio de sesión
+  }
+</script>
 
 
 
