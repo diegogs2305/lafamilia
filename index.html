@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -113,17 +114,12 @@
       <h2>Chatbot</h2>
     </div>
 
-  
-
-  <!-- Bloque Proyectos igual de estilo -->
-  <div class="grid-item" onclick="location.href='proyectos.html'">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
-    </svg>
-    <h2>Proyectos</h2>
-  </div>
-
-  
+    <div class="grid-item" onclick="location.href='proyectos.html'">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+      </svg>
+      <h2>Proyectos</h2>
+    </div>
 
     <div class="grid-item" onclick="location.href='contacto.html'">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4h-16c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2zm0 4l-8 5-8-5v-2l8 5 8-5v2z"/></svg>
@@ -143,6 +139,20 @@
       localStorage.removeItem('user2');
       window.location.href = 'pagina.html'; // Cambia a tu página de login
     }
+
+    // Cambia el nombre en el span 'nombreUsuario' al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      const userLoggedIn = localStorage.getItem('userLoggedIn');
+      if (userLoggedIn) {
+        try {
+          const user = JSON.parse(userLoggedIn);
+          const nombre = user.username || 'Invitado';
+          document.getElementById('nombreUsuario').textContent = nombre;
+        } catch {
+          document.getElementById('nombreUsuario').textContent = 'Invitado';
+        }
+      }
+    });
   </script>
 
 </body>
