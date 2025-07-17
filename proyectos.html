@@ -20,6 +20,32 @@
       text-align: center;
       animation: fadeSlide 1.2s ease-out;
     }
+<button id="btnHome" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ff4b2b;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255,75,43,0.6);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+">
+  🏠 Inicio
+</button>
+
+<script>
+  const btn = document.getElementById('btnHome');
+  btn.onclick = () => {
+    window.location.href = 'index.html'; // Ajusta la ruta de inicio aquí
+  };
+  btn.addEventListener('mouseover', () => btn.style.backgroundColor = '#ff3a1a');
+  btn.addEventListener('mouseout', () => btn.style.backgroundColor = '#ff4b2b');
+</script>
 
     h1 {
       font-size: 3em;
