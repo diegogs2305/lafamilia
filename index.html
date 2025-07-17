@@ -127,22 +127,7 @@
 
   </main>
 
-  <script>
-    function cerrarSesion() {
-      localStorage.removeItem("logueado");
-      window.location.href = "login.html";
-    }
-
-    // Seguridad opcional: proteger el acceso
-    if (!localStorage.getItem("logueado")) {
-      window.location.href = "login.html";
-    }
-  </script>
-
-</body>
-</html>
-
- <script>
+<script>
     if (!localStorage.getItem('userLoggedIn')) {
       window.location.href = 'pagina.html';
     }
@@ -153,3 +138,9 @@
     }
   </script>
 
+
+
+</body>
+</html>
+
+ 
