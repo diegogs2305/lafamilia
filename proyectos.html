@@ -77,14 +77,7 @@
     }
   </style>
   <script>
-    // Verificar sesión para proteger la página
-    function verificarAcceso() {
-      const isLoggedIn = localStorage.getItem('userLoggedIn');
-      const storedUser = localStorage.getItem('user2');
-      if (!isLoggedIn || !storedUser) {
-        window.location.href = 'inicio_proyectos.html'; // Redirige al login
-      }
-    }
+    
 
     window.onload = verificarAcceso;
 
