@@ -78,3 +78,27 @@ function checkSession() {
     window.location.href = 'pagina.html';
   }
 }
+
+// Función para mostrar el nombre del usuario en el header (o donde tengas el span con id nombreUsuario)
+function mostrarNombreUsuario() {
+  const userLoggedIn = localStorage.getItem('userLoggedIn');
+  if (userLoggedIn) {
+    try {
+      const user = JSON.parse(userLoggedIn);
+      const nombre = user.username || 'Invitado';
+      const spanNombre = document.getElementById('nombreUsuario');
+      if (spanNombre) {
+        spanNombre.textContent = nombre;
+      }
+    } catch {
+      // En caso de error, poner "Invitado"
+      const spanNombre = document.getElementById('nombreUsuario');
+      if (spanNombre) {
+        spanNombre.textContent = 'Invitado';
+      }
+    }
+  }
+}
+
+// Solo llamamos a mostrarNombreUsuario al cargar el DOM
+document.addEventListener('DOMContentLoaded', mostrarNombreUsuario);
