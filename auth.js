@@ -68,13 +68,13 @@ function login() {
 // Función para cerrar sesión
 function logout() {
   localStorage.removeItem('userLoggedIn');
-  window.location.href = 'login.html';
+  window.location.href = 'pagina.html';
 }
 
 // Función para verificar si hay sesión activa
 function checkSession() {
   const user = JSON.parse(localStorage.getItem('userLoggedIn'));
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = 'pagina.html';
   }
 }
