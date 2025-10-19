@@ -21,7 +21,7 @@
             border-radius: 10px;
             overflow: hidden;
             position: relative;
-            background: #000; /* fondo negro si no hay cámara */
+            background: #000;
         }
         #resultado {
             font-size: 18px;
@@ -52,20 +52,11 @@
         // Inicializar lector de QR
         const html5QrCode = new Html5Qrcode("reader");
 
-        // Obtener las cámaras disponibles
+        // Usar la primera cámara disponible
         Html5Qrcode.getCameras().then(cameras => {
             if (cameras && cameras.length) {
-                // Elegir la trasera si hay varias (móvil), sino la primera
-                let camaraSeleccionada = cameras[0];
-                for (let cam of cameras) {
-                    if (/back|rear|environment/i.test(cam.label)) {
-                        camaraSeleccionada = cam;
-                        break;
-                    }
-                }
-
                 html5QrCode.start(
-                    { deviceId: { exact: camaraSeleccionada.id } },
+                    { deviceId: { exact: cameras[0].id } },
                     { fps: 10, qrbox: 250 },
                     (decodedText, decodedResult) => {
                         document.getElementById("resultado").innerText = decodedText;
@@ -79,9 +70,8 @@
                 ).catch(err => {
                     console.error("No se pudo iniciar la cámara: ", err);
                 });
-
             } else {
-                document.getElementById("resultado").innerText = "No se detectó ninguna cámara disponible";
+                document.getElementById("resultado").innerText = "No se detectó ninguna cámara";
             }
         }).catch(err => {
             console.error("Error obteniendo cámaras: ", err);
