@@ -1,82 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lector de QR</title>
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        #reader {
-            width: 100%;
-            max-width: 500px;
-            height: 400px;
-            border: 2px solid #333;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            background: #000;
-        }
-        #resultado {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            word-wrap: break-word;
-            text-align: center;
-            margin-top: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lector de QR</title>
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+<style>
+  body { font-family: Arial; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+  video { width: 100%; max-width: 500px; border: 2px solid #333; border-radius: 10px; }
+  canvas { display: none; }
+  #resultado { margin-top: 15px; font-weight: bold; }
+</style>
 </head>
 <body>
-    <h1>Lector de QR</h1>
-    <div id="reader"></div>
-    <p id="resultado">Aquí aparecerá el contenido del QR</p>
+<h1>Lector de QR</h1>
+<video id="video" autoplay></video>
+<canvas id="canvas"></canvas>
+<p id="resultado">Aquí aparecerá el contenido del QR</p>
 
-    <script>
-        // Función para comprobar si es una URL
-        function esURL(str) {
-            try {
-                new URL(str);
-                return true;
-            } catch {
-                return false;
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+const resultado = document.getElementById('resultado');
+
+// Pedir acceso a la cámara
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+.then(stream => {
+    video.srcObject = stream;
+    video.setAttribute("playsinline", true); // necesario en iPhone
+    requestAnimationFrame(tick);
+})
+.catch(err => {
+    resultado.innerText = "Error al acceder a la cámara: " + err;
+});
+
+function tick() {
+    if(video.readyState === video.HAVE_ENOUGH_DATA){
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
+        if(code){
+            resultado.innerText = code.data;
+            if(/^https?:\/\//.test(code.data)){
+                window.location.href = code.data;
             }
         }
-
-        // Inicializar lector de QR
-        const html5QrCode = new Html5Qrcode("reader");
-
-        // Usar la primera cámara disponible
-        Html5Qrcode.getCameras().then(cameras => {
-            if (cameras && cameras.length) {
-                html5QrCode.start(
-                    { deviceId: { exact: cameras[0].id } },
-                    { fps: 10, qrbox: 250 },
-                    (decodedText, decodedResult) => {
-                        document.getElementById("resultado").innerText = decodedText;
-                        if (esURL(decodedText)) {
-                            window.location.href = decodedText;
-                        }
-                    },
-                    (errorMessage) => {
-                        console.log("Error leyendo QR: ", errorMessage);
-                    }
-                ).catch(err => {
-                    console.error("No se pudo iniciar la cámara: ", err);
-                });
-            } else {
-                document.getElementById("resultado").innerText = "No se detectó ninguna cámara";
-            }
-        }).catch(err => {
-            console.error("Error obteniendo cámaras: ", err);
-            document.getElementById("resultado").innerText = "Error al acceder a la cámara";
-        });
-    </script>
+    }
+    requestAnimationFrame(tick);
+}
+</script>
 </body>
 </html>
