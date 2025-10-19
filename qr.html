@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,6 +89,7 @@ const mensajeTexto = document.getElementById('mensaje-texto');
 const btnSi = document.getElementById('si');
 const btnNo = document.getElementById('no');
 
+let qrDetectado = false;
 let redirigiendoTimeout = null;
 
 // Acceso a la cámara
@@ -110,15 +111,15 @@ function scanQRCode() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
-    if(code){
+
+    if(code && !qrDetectado){
       resultado.innerText = code.data;
 
-      // Si es URL, mostrar mensaje de redirección
-      if(/^https?:\/\//.test(code.data) && mensajeDiv.style.display === "none"){
-        mensajeTexto.innerText = `Se ha detectado una web: ${code.data}\n¿Quieres ser redirigido?`;
+      if(/^https?:\/\//.test(code.data)){
+        qrDetectado = true; 
+        mensajeTexto.innerText = `Se ha detectado una web:\n${code.data}\n¿Quieres ser redirigido?`;
         mensajeDiv.style.display = "block";
 
-        // Botones
         btnSi.onclick = () => {
           clearTimeout(redirigiendoTimeout);
           window.location.href = code.data;
@@ -126,9 +127,9 @@ function scanQRCode() {
         btnNo.onclick = () => {
           clearTimeout(redirigiendoTimeout);
           mensajeDiv.style.display = "none";
+          qrDetectado = false;
         };
 
-        // Redirigir automáticamente si no pulsa nada en 5s
         redirigiendoTimeout = setTimeout(() => {
           window.location.href = code.data;
         }, 5000);
