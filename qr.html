@@ -3,20 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lector de QR</title>
+<title>Lector de QR Mejorado</title>
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 <style>
-  body { font-family: Arial; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-  video { width: 100%; max-width: 500px; border: 2px solid #333; border-radius: 10px; }
-  canvas { display: none; }
-  #resultado { margin-top: 15px; font-weight: bold; }
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { margin-bottom: 10px; }
+  #video-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+  video {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    background-color: #000;
+  }
+  #scan-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    border: 3px dashed limegreen;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+  #resultado {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+  #mensaje-redirect {
+    display: none;
+    margin-top: 15px;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+  }
+  #mensaje-redirect button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #mensaje-redirect button#si { background-color: #4CAF50; color: white; border: none; }
+  #mensaje-redirect button#no { background-color: #f44336; color: white; border: none; }
 </style>
 </head>
 <body>
 <h1>Lector de QR</h1>
-<video id="video" autoplay></video>
-<canvas id="canvas"></canvas>
-<p id="resultado">Aquí aparecerá el contenido del QR</p>
+<div id="video-container">
+  <video id="video" autoplay></video>
+  <div id="scan-box"></div>
+</div>
+<canvas id="canvas" style="display:none;"></canvas>
+<p id="resultado">Escaneando...</p>
+
+<div id="mensaje-redirect">
+  <p id="mensaje-texto"></p>
+  <button id="si">Sí</button>
+  <button id="no">No</button>
+</div>
 
 <script>
 const video = document.getElementById('video');
@@ -24,32 +84,58 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const resultado = document.getElementById('resultado');
 
-// Pedir acceso a la cámara
+const mensajeDiv = document.getElementById('mensaje-redirect');
+const mensajeTexto = document.getElementById('mensaje-texto');
+const btnSi = document.getElementById('si');
+const btnNo = document.getElementById('no');
+
+let redirigiendoTimeout = null;
+
+// Acceso a la cámara
 navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
 .then(stream => {
-    video.srcObject = stream;
-    video.setAttribute("playsinline", true); // necesario en iPhone
-    requestAnimationFrame(tick);
+  video.srcObject = stream;
+  video.setAttribute("playsinline", true);
+  requestAnimationFrame(scanQRCode);
 })
 .catch(err => {
-    resultado.innerText = "Error al acceder a la cámara: " + err;
+  resultado.innerText = "Error al acceder a la cámara: " + err;
 });
 
-function tick() {
-    if(video.readyState === video.HAVE_ENOUGH_DATA){
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
-        if(code){
-            resultado.innerText = code.data;
-            if(/^https?:\/\//.test(code.data)){
-                window.location.href = code.data;
-            }
-        }
+// Función para detectar QR
+function scanQRCode() {
+  if(video.readyState === video.HAVE_ENOUGH_DATA){
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+    if(code){
+      resultado.innerText = code.data;
+
+      // Si es URL, mostrar mensaje de redirección
+      if(/^https?:\/\//.test(code.data) && mensajeDiv.style.display === "none"){
+        mensajeTexto.innerText = `Se ha detectado una web: ${code.data}\n¿Quieres ser redirigido?`;
+        mensajeDiv.style.display = "block";
+
+        // Botones
+        btnSi.onclick = () => {
+          clearTimeout(redirigiendoTimeout);
+          window.location.href = code.data;
+        };
+        btnNo.onclick = () => {
+          clearTimeout(redirigiendoTimeout);
+          mensajeDiv.style.display = "none";
+        };
+
+        // Redirigir automáticamente si no pulsa nada en 5s
+        redirigiendoTimeout = setTimeout(() => {
+          window.location.href = code.data;
+        }, 5000);
+      }
     }
-    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(scanQRCode);
 }
 </script>
 </body>
