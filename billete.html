@@ -6,16 +6,16 @@
 <title>Billete LA FAMILIA FLIGHTS</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
-  body { margin:0; font-family:Inter,sans-serif; background:#f4f4f4; }
-  header { padding:20px; text-align:center; background:white; border-bottom:2px solid #eee; }
-  h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
-  .ticket { max-width:700px; margin:40px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); position:relative; }
-  .ticket h2 { margin-top:0; color:#222; }
-  .section { display:flex; justify-content:space-between; margin-bottom:15px; }
-  .section div { flex:1; }
-  .barcode { text-align:center; margin-top:20px; }
-  button { margin-top:20px; width:100%; padding:14px; background:#cc0000; color:white; border:none; border-radius:8px; font-size:18px; font-weight:700; cursor:pointer; }
-  button:hover { background:#a00000; }
+body { margin:0; font-family:Inter,sans-serif; background:#f4f4f4; }
+header { padding:20px; text-align:center; background:white; border-bottom:2px solid #eee; }
+h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
+.ticket { max-width:700px; margin:40px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); position:relative; }
+.ticket h2 { margin-top:0; color:#222; }
+.section { display:flex; justify-content:space-between; margin-bottom:15px; }
+.section div { flex:1; }
+.barcode { text-align:center; margin-top:20px; }
+button { margin-top:20px; width:100%; padding:14px; background:#cc0000; color:white; border:none; border-radius:8px; font-size:18px; font-weight:700; cursor:pointer; }
+button:hover { background:#a00000; }
 </style>
 </head>
 <body>
@@ -51,34 +51,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-window.onload = function(){
-  const reserva = JSON.parse(localStorage.getItem("reserva"));
-  if(!reserva) { alert("No hay datos de reserva."); return; }
+window.onload=function(){
+  const reserva=JSON.parse(localStorage.getItem("reserva"));
+  if(!reserva){ alert("No hay datos de reserva."); return; }
 
-  const pasajero = reserva.pasajeros[0]; // primer pasajero
-  document.getElementById("pasajeroName").textContent = "Pasajero: " + (pasajero.name || "Juan Pérez");
-  document.getElementById("clase").textContent = "Clase: " + reserva.clase;
-  document.getElementById("origen").textContent = "Origen: " + reserva.origen;
-  document.getElementById("destino").textContent = "Destino: " + reserva.destino;
-  document.getElementById("fecha").textContent = "Fecha: " + reserva.fechaIda;
-  document.getElementById("hora").textContent = "Hora: 09:00";
-  document.getElementById("asiento").textContent = "Asiento: " + pasajero.seat;
-  document.getElementById("avion").textContent = "Avión: Airbus A320";
+  const pasajero=reserva.pasajeros[0]; // primer pasajero
+  document.getElementById("pasajeroName").textContent="Pasajero: "+(pasajero.name||"Juan Pérez");
+  document.getElementById("clase").textContent="Clase: "+reserva.clase;
+  document.getElementById("origen").textContent="Origen: "+reserva.origen;
+  document.getElementById("destino").textContent="Destino: "+reserva.destino;
+  document.getElementById("fecha").textContent="Fecha: "+reserva.fechaIda;
+  document.getElementById("hora").textContent="Hora: 09:00";
+  document.getElementById("asiento").textContent="Asiento: "+pasajero.seat;
+  document.getElementById("avion").textContent="Avión: Airbus A320";
 
   JsBarcode("#barcode", reserva.vueloIdida, {format:"CODE128", width:2, height:50, displayValue:true});
 };
 
 function downloadPDF(){
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const ticket = document.getElementById("ticket");
-  doc.html(ticket, {
-    callback: function (doc) {
-      doc.save("billete_LaFamiliaFlights.pdf");
-    },
-    x:10,
-    y:10,
-    html2canvas: { scale:0.5 }
+  const doc=new jsPDF();
+  const ticket=document.getElementById("ticket");
+  doc.html(ticket,{
+    callback:function(doc){ doc.save("billete_LaFamiliaFlights.pdf"); },
+    x:10,y:10,html2canvas:{ scale:0.5 }
   });
 }
 </script>
