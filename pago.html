@@ -43,6 +43,15 @@ button:hover { background:#a00000; }
     </div>
   </div>
 
+  <label>DNI / Pasaporte</label>
+  <input type="text" id="dni" placeholder="12345678A">
+
+  <label>Email</label>
+  <input type="email" id="email" placeholder="correo@ejemplo.com">
+
+  <label>Teléfono</label>
+  <input type="tel" id="phone" placeholder="+34 600 123 456">
+
   <div class="info">Pago simulado – Los datos no se guardan</div>
   <button onclick="processPayment()">Pagar</button>
 </div>
@@ -53,13 +62,19 @@ function processPayment(){
   const number=document.getElementById("cardNumber").value.replace(/\s+/g,'');
   const exp=document.getElementById("expDate").value.trim();
   const cvc=document.getElementById("cvc").value.trim();
+  const dni=document.getElementById("dni").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const phone=document.getElementById("phone").value.trim();
 
-  if(!name||number.length!==16||!/^\d+$/.test(number)||!/^\d{2}\/\d{2}$/.test(exp)||cvc.length<3){
+  if(!name||number.length!==16||!/^\d+$/.test(number)||
+     !/^\d{2}\/\d{2}$/.test(exp)||cvc.length<3||
+     !dni||!email||!phone){
     alert("Completa todos los campos correctamente.");
     return;
   }
 
-  localStorage.setItem("pago", JSON.stringify({name,number,exp,cvc}));
+  const reserva=JSON.parse(localStorage.getItem("reserva"));
+  localStorage.setItem("pago", JSON.stringify({name,number,exp,cvc,dni,email,phone,reserva}));
   alert("Pago procesado con éxito. Redirigiendo al billete...");
   window.location.href="billete.html";
 }
