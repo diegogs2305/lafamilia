@@ -84,7 +84,7 @@ button:hover { background:#a00000; }
 </div>
 
 <script>
-// Lista de 100 aeropuertos reales (nombre completo, ciudad, código IATA, lat/lng)
+// Lista de 100 aeropuertos reales (nombre, ciudad, IATA, lat/lng)
 const airports=[
 {code:"MAD",name:"Madrid-Barajas",city:"Madrid",lat:40.4983,lng:-3.5676},
 {code:"BCN",name:"Barcelona-El Prat",city:"Barcelona",lat:41.2974,lng:2.0833},
@@ -118,33 +118,36 @@ function distanceHav(lat1,lng1,lat2,lng2){
   const R=6371;
   const dLat=(lat2-lat1)*Math.PI/180;
   const dLon=(lng2-lng1)*Math.PI/180;
-  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
   const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
   return R*c;
 }
 
-function calcDuration(dist){ return Math.ceil(dist/850); } // Airbus 850km/h
-function calcPrice(dist,clase){ 
+function calcDuration(dist){ return Math.ceil(dist/850 + 0.5); } // +30 min taxi
+function calcPrice(dist,clase,adults,kids){ 
   let base=0.12*dist;
   if(clase==="premium") base*=1.5;
   if(clase==="business") base*=2.5;
-  return Math.round(base);
+  return Math.round(base*adults + base*0.5*kids);
 }
 
 function generateFlights(from,to,clase){
   const aFrom=airports.find(a=>a.code===from);
   const aTo=airports.find(a=>a.code===to);
   const dist=distanceHav(aFrom.lat,aFrom.lng,aTo.lat,aTo.lng);
+  const adults=parseInt(document.getElementById("adults").value);
+  const kids=parseInt(document.getElementById("kids").value);
   const duration=calcDuration(dist);
   const list=[];
   for(let i=0;i<3;i++){
+    const hour=6+Math.floor(Math.random()*16);
     list.push({
       id:"FL"+Math.floor(Math.random()*999999),
       from,to,
-      time:`${8+i}:00`,
+      time:`${hour}:00`,
       duration:duration+"h",
-      aircraft:"Airbus A320",
-      price:calcPrice(dist,clase)
+      aircraft:dist<2000?"Airbus A320":(dist<5000?"Airbus A321":"Airbus A330"),
+      price:calcPrice(dist,clase,adults,kids)
     });
   }
   return list;
@@ -231,3 +234,4 @@ function nextPassengerData(){
 
 </body>
 </html>
+
