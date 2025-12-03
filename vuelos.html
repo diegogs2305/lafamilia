@@ -32,14 +32,12 @@
 
 <div class="app">
 
-  <!-- Panel de búsqueda -->
   <div class="panel">
     <h2>Reserva tu vuelo</h2>
     <div class="grid">
       <div>
         <label>Origen</label>
         <select id="origin">
-          <!-- 200 destinos -->
           <option value="MAD">Madrid (MAD)</option>
           <option value="BCN">Barcelona (BCN)</option>
           <option value="CDG">París (CDG)</option>
@@ -56,13 +54,12 @@
           <option value="PEK">Beijing (PEK)</option>
           <option value="DXB">Dubái (DXB)</option>
           <option value="SVO">Moscú (SVO)</option>
-          <!-- aquí añadirías más hasta 200 destinos -->
+          <!-- Añadir hasta 200 destinos reales -->
         </select>
       </div>
       <div>
         <label>Destino</label>
         <select id="destination">
-          <!-- mismo listado de 200 destinos -->
           <option value="MAD">Madrid (MAD)</option>
           <option value="BCN">Barcelona (BCN)</option>
           <option value="CDG">París (CDG)</option>
@@ -79,7 +76,7 @@
           <option value="PEK">Beijing (PEK)</option>
           <option value="DXB">Dubái (DXB)</option>
           <option value="SVO">Moscú (SVO)</option>
-          <!-- añadir hasta 200 destinos -->
+          <!-- Añadir hasta 200 destinos reales -->
         </select>
       </div>
       <div>
@@ -106,19 +103,16 @@
     <button style="margin-top:10px;" onclick="searchOutbound()">Buscar vuelos de ida</button>
   </div>
 
-  <!-- Resultados ida -->
   <div class="panel" id="resultsGo" style="display:none;">
     <h2>Vuelos de ida</h2>
     <div id="flightListGo"></div>
   </div>
 
-  <!-- Resultados vuelta -->
   <div class="panel" id="resultsReturn" style="display:none;">
     <h2>Vuelos de vuelta</h2>
     <div id="flightListReturn"></div>
   </div>
 
-  <!-- Selección asientos -->
   <div class="panel" id="seatsPanel" style="display:none;">
     <h2>Selecciona tus asientos</h2>
     <div id="seatMap"></div>
@@ -128,15 +122,11 @@
 </div>
 
 <script>
-// --- Mapas de aviones simplificados ---
 const AIRBUS={"MAD-ZRH":"A320","BCN-ZRH":"A321","MAD-LHR":"A320"};
-
 let selectedOutbound, selectedReturn, passengerList=[];
 
-// Generar vuelos
 function generateFlights(from,to){
-  let list=[];
-  let duration=Math.floor(Math.random()*10)+1;
+  let list=[], duration=Math.floor(Math.random()*10)+1;
   for(let i=0;i<5;i++){
     let key=`${from}-${to}`;
     list.push({
@@ -210,8 +200,17 @@ function generateSeatMap(){
 function nextPassengerData(){
   let selected=document.querySelectorAll(".seat.selected");
   if(selected.length===0){ alert("Selecciona al menos un asiento"); return; }
-  passengerList=[]; selected.forEach(s=>passengerList.push({seat:s.textContent}));
-  alert("Pasajeros seleccionados. Ahora pasarías a la página de pago.");
+  const data = {
+    vueloIdida: window.selectedOutbound,
+    vueloVuelta: window.selectedReturn,
+    origen: document.getElementById("origin").value,
+    destino: document.getElementById("destination").value,
+    fechaIda: document.getElementById("dateGo").value,
+    fechaVuelta: document.getElementById("dateReturn").value,
+    clase: document.getElementById("class").value,
+    pasajeros: Array.from(selected).map(s => ({seat:s.textContent}))
+  };
+  localStorage.setItem("reserva", JSON.stringify(data));
   window.location.href="pago.html";
 }
 </script>
