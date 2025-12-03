@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA FAMILIA FLIGHTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  body { margin:0; font-family:Inter,sans-serif; background:white; color:#222; }
+  header { padding:20px; text-align:center; border-bottom:2px solid #eee; }
+  h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
+  .app { max-width:1200px; margin:auto; padding:20px; }
+  .panel { background:#f6f6f6; padding:16px; border-radius:10px; margin-bottom:20px; border:1px solid #ddd; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  select,input,button { padding:10px; border-radius:8px; border:1px solid #bbb; width:100%; font-size:15px; }
+  button { background:#cc0000; color:white; border:none; cursor:pointer; font-weight:700; }
+  button:hover { background:#a00000; }
+  .flight-card { background:#ffffff; border:1px solid #ddd; padding:14px; border-radius:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+  .flight-card:hover { background:#fafafa; }
+  .price { font-weight:800; color:#cc0000; font-size:18px; }
+  .seat { width:30px; height:30px; border:1px solid #888; margin:2px; display:inline-block; text-align:center; line-height:30px; cursor:pointer; border-radius:4px; }
+  .seat.taken { background:#999; cursor:not-allowed; color:#fff; }
+  .seat.selected { background:#cc0000; color:white; }
+  .seat-row { margin-bottom:5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LA FAMILIA FLIGHTS</h1>
+</header>
+
+<div class="app">
+
+  <!-- Panel de búsqueda -->
+  <div class="panel">
+    <h2>Reserva tu vuelo</h2>
+    <div class="grid">
+      <div>
+        <label>Origen</label>
+        <select id="origin">
+          <!-- 200 destinos -->
+          <option value="MAD">Madrid (MAD)</option>
+          <option value="BCN">Barcelona (BCN)</option>
+          <option value="CDG">París (CDG)</option>
+          <option value="LHR">Londres (LHR)</option>
+          <option value="ZRH">Zúrich (ZRH)</option>
+          <option value="FRA">Frankfurt (FRA)</option>
+          <option value="FCO">Roma (FCO)</option>
+          <option value="LIS">Lisboa (LIS)</option>
+          <option value="JFK">Nueva York (JFK)</option>
+          <option value="LAX">Los Ángeles (LAX)</option>
+          <option value="NRT">Tokio (NRT)</option>
+          <option value="SIN">Singapur (SIN)</option>
+          <option value="SYD">Sídney (SYD)</option>
+          <option value="PEK">Beijing (PEK)</option>
+          <option value="DXB">Dubái (DXB)</option>
+          <option value="SVO">Moscú (SVO)</option>
+          <!-- aquí añadirías más hasta 200 destinos -->
+        </select>
+      </div>
+      <div>
+        <label>Destino</label>
+        <select id="destination">
+          <!-- mismo listado de 200 destinos -->
+          <option value="MAD">Madrid (MAD)</option>
+          <option value="BCN">Barcelona (BCN)</option>
+          <option value="CDG">París (CDG)</option>
+          <option value="LHR">Londres (LHR)</option>
+          <option value="ZRH">Zúrich (ZRH)</option>
+          <option value="FRA">Frankfurt (FRA)</option>
+          <option value="FCO">Roma (FCO)</option>
+          <option value="LIS">Lisboa (LIS)</option>
+          <option value="JFK">Nueva York (JFK)</option>
+          <option value="LAX">Los Ángeles (LAX)</option>
+          <option value="NRT">Tokio (NRT)</option>
+          <option value="SIN">Singapur (SIN)</option>
+          <option value="SYD">Sídney (SYD)</option>
+          <option value="PEK">Beijing (PEK)</option>
+          <option value="DXB">Dubái (DXB)</option>
+          <option value="SVO">Moscú (SVO)</option>
+          <!-- añadir hasta 200 destinos -->
+        </select>
+      </div>
+      <div>
+        <label>Fecha de ida</label>
+        <input type="date" id="dateGo">
+      </div>
+      <div>
+        <label>Fecha de vuelta</label>
+        <input type="date" id="dateReturn">
+      </div>
+      <div>
+        <label>Adultos</label>
+        <select id="adults"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+      </div>
+      <div>
+        <label>Niños</label>
+        <select id="kids"><option>0</option><option>1</option><option>2</option><option>3</option></select>
+      </div>
+      <div>
+        <label>Clase</label>
+        <select id="class"><option value="eco">Turista</option><option value="premium">Premium</option><option value="business">Business</option></select>
+      </div>
+    </div>
+    <button style="margin-top:10px;" onclick="searchOutbound()">Buscar vuelos de ida</button>
+  </div>
+
+  <!-- Resultados ida -->
+  <div class="panel" id="resultsGo" style="display:none;">
+    <h2>Vuelos de ida</h2>
+    <div id="flightListGo"></div>
+  </div>
+
+  <!-- Resultados vuelta -->
+  <div class="panel" id="resultsReturn" style="display:none;">
+    <h2>Vuelos de vuelta</h2>
+    <div id="flightListReturn"></div>
+  </div>
+
+  <!-- Selección asientos -->
+  <div class="panel" id="seatsPanel" style="display:none;">
+    <h2>Selecciona tus asientos</h2>
+    <div id="seatMap"></div>
+    <button onclick="nextPassengerData()">Siguiente</button>
+  </div>
+
+</div>
+
+<script>
+// --- Mapas de aviones simplificados ---
+const AIRBUS={"MAD-ZRH":"A320","BCN-ZRH":"A321","MAD-LHR":"A320"};
+
+let selectedOutbound, selectedReturn, passengerList=[];
+
+// Generar vuelos
+function generateFlights(from,to){
+  let list=[];
+  let duration=Math.floor(Math.random()*10)+1;
+  for(let i=0;i<5;i++){
+    let key=`${from}-${to}`;
+    list.push({
+      id:"FL"+Math.floor(Math.random()*999999),
+      from,to,
+      time:`${8+i}:00`,
+      duration:duration+"h",
+      aircraft:AIRBUS[key]||"A320",
+      price:Math.floor(Math.random()*500)+50
+    });
+  }
+  return list;
+}
+
+function searchOutbound(){
+  const o=document.getElementById("origin").value;
+  const d=document.getElementById("destination").value;
+  if(o===d){ alert("Origen y destino no pueden ser iguales."); return; }
+  let flights=generateFlights(o,d);
+  document.getElementById("resultsGo").style.display="block";
+  let cont=document.getElementById("flightListGo");
+  cont.innerHTML="";
+  flights.forEach(f=>{
+    let card=document.createElement("div");
+    card.className="flight-card";
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseOutbound("${f.id}")'>Elegir</button>`;
+    cont.appendChild(card);
+  });
+}
+
+function chooseOutbound(id){
+  window.selectedOutbound=id;
+  document.getElementById("resultsReturn").style.display="block";
+  const o=document.getElementById("origin").value;
+  const d=document.getElementById("destination").value;
+  let flights=generateFlights(d,o);
+  let cont=document.getElementById("flightListReturn");
+  cont.innerHTML="";
+  flights.forEach(f=>{
+    let card=document.createElement("div");
+    card.className="flight-card";
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseReturn("${f.id}")'>Elegir vuelta</button>`;
+    cont.appendChild(card);
+  });
+}
+
+function chooseReturn(id){
+  window.selectedReturn=id;
+  document.getElementById("seatsPanel").style.display="block";
+  generateSeatMap();
+}
+
+function generateSeatMap(){
+  let seatMap=document.getElementById("seatMap");
+  seatMap.innerHTML="";
+  let rows=10, cols=6;
+  let clase=document.getElementById("class").value;
+  if(clase==="business"){ rows=3; cols=4; } else if(clase==="premium"){ rows=5; cols=6; }
+  for(let r=1;r<=rows;r++){
+    let rowDiv=document.createElement("div"); rowDiv.className="seat-row";
+    for(let c=1;c<=cols;c++){
+      let seat=document.createElement("div");
+      seat.className="seat"; seat.textContent=`${r}${String.fromCharCode(64+c)}`;
+      seat.onclick=function(){ if(!seat.classList.contains("taken")){ seat.classList.toggle("selected"); } };
+      rowDiv.appendChild(seat);
+    }
+    seatMap.appendChild(rowDiv);
+  }
+}
+
+function nextPassengerData(){
+  let selected=document.querySelectorAll(".seat.selected");
+  if(selected.length===0){ alert("Selecciona al menos un asiento"); return; }
+  passengerList=[]; selected.forEach(s=>passengerList.push({seat:s.textContent}));
+  alert("Pasajeros seleccionados. Ahora pasarías a la página de pago.");
+  window.location.href="pago.html";
+}
+</script>
+
+</body>
+</html>
