@@ -36,35 +36,11 @@ button:hover { background:#a00000; }
     <div class="grid">
       <div>
         <label>Origen</label>
-        <select id="origin">
-          <option value="MAD">Madrid (MAD)</option>
-          <option value="BCN">Barcelona (BCN)</option>
-          <option value="LHR">Londres (LHR)</option>
-          <option value="CDG">París (CDG)</option>
-          <option value="JFK">Nueva York (JFK)</option>
-          <option value="NRT">Tokio (NRT)</option>
-          <option value="SYD">Sídney (SYD)</option>
-          <option value="DXB">Dubái (DXB)</option>
-          <option value="FRA">Frankfurt (FRA)</option>
-          <option value="ZRH">Zúrich (ZRH)</option>
-          <!-- Añadir más aeropuertos hasta 50 -->
-        </select>
+        <select id="origin"></select>
       </div>
       <div>
         <label>Destino</label>
-        <select id="destination">
-          <option value="MAD">Madrid (MAD)</option>
-          <option value="BCN">Barcelona (BCN)</option>
-          <option value="LHR">Londres (LHR)</option>
-          <option value="CDG">París (CDG)</option>
-          <option value="JFK">Nueva York (JFK)</option>
-          <option value="NRT">Tokio (NRT)</option>
-          <option value="SYD">Sídney (SYD)</option>
-          <option value="DXB">Dubái (DXB)</option>
-          <option value="FRA">Frankfurt (FRA)</option>
-          <option value="ZRH">Zúrich (ZRH)</option>
-          <!-- Igual, hasta 50 -->
-        </select>
+        <select id="destination"></select>
       </div>
       <div>
         <label>Fecha de ida</label>
@@ -108,41 +84,66 @@ button:hover { background:#a00000; }
 </div>
 
 <script>
-const AIRBUS={"MAD-ZRH":"A320","BCN-ZRH":"A321","MAD-LHR":"A320"};
+// Lista de 100 aeropuertos reales (nombre completo, ciudad, código IATA, lat/lng)
+const airports=[
+{code:"MAD",name:"Madrid-Barajas",city:"Madrid",lat:40.4983,lng:-3.5676},
+{code:"BCN",name:"Barcelona-El Prat",city:"Barcelona",lat:41.2974,lng:2.0833},
+{code:"LHR",name:"Heathrow",city:"Londres",lat:51.4700,lng:-0.4543},
+{code:"CDG",name:"Charles de Gaulle",city:"París",lat:49.0097,lng:2.5479},
+{code:"JFK",name:"John F. Kennedy",city:"Nueva York",lat:40.6413,lng:-73.7781},
+{code:"NRT",name:"Narita",city:"Tokio",lat:35.7767,lng:140.3186},
+{code:"SYD",name:"Kingsford Smith",city:"Sídney",lat:-33.9399,lng:151.1753},
+{code:"DXB",name:"Dubai Intl",city:"Dubái",lat:25.2532,lng:55.3657},
+{code:"FRA",name:"Frankfurt",city:"Frankfurt",lat:50.0379,lng:8.5622},
+{code:"ZRH",name:"Zurich",city:"Zúrich",lat:47.4581,lng:8.5492},
+// ... añadir los demás hasta 100 aeropuertos
+];
+
+// Llenar select con aeropuertos
+const originSelect=document.getElementById("origin");
+const destSelect=document.getElementById("destination");
+airports.forEach(a=>{
+  const opt=document.createElement("option");
+  opt.value=a.code;
+  opt.textContent=`${a.name} (${a.city}) - ${a.code}`;
+  originSelect.appendChild(opt.cloneNode(true));
+  destSelect.appendChild(opt.cloneNode(true));
+});
+
+// Variables globales
 let selectedOutbound, selectedReturn;
 
-function distance(from,to){
-  // Distancias aproximadas en km
-  const dists={
-    "MAD-BCN":505,"MAD-LHR":1263,"MAD-CDG":1054,"MAD-ZRH":1440,
-    "MAD-JFK":5840,"MAD-NRT":10870,"MAD-SYD":16990,"MAD-DXB":5470,"MAD-FRA":1235
-  };
-  return dists[`${from}-${to}`] || dists[`${to}-${from}`] || 1000;
+// Haversine para distancia km
+function distanceHav(lat1,lng1,lat2,lng2){
+  const R=6371;
+  const dLat=(lat2-lat1)*Math.PI/180;
+  const dLon=(lng2-lng1)*Math.PI/180;
+  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
 }
 
-function calcDuration(dist){
-  let speed=850; // km/h Airbus
-  return Math.ceil(dist/speed);
-}
-
-function calcPrice(dist,clase){
-  let base=0.1*dist; // 0.1€ por km
+function calcDuration(dist){ return Math.ceil(dist/850); } // Airbus 850km/h
+function calcPrice(dist,clase){ 
+  let base=0.12*dist;
   if(clase==="premium") base*=1.5;
   if(clase==="business") base*=2.5;
   return Math.round(base);
 }
 
 function generateFlights(from,to,clase){
-  let dist=distance(from,to);
-  let duration=calcDuration(dist);
-  let list=[];
+  const aFrom=airports.find(a=>a.code===from);
+  const aTo=airports.find(a=>a.code===to);
+  const dist=distanceHav(aFrom.lat,aFrom.lng,aTo.lat,aTo.lng);
+  const duration=calcDuration(dist);
+  const list=[];
   for(let i=0;i<3;i++){
     list.push({
       id:"FL"+Math.floor(Math.random()*999999),
       from,to,
       time:`${8+i}:00`,
       duration:duration+"h",
-      aircraft:AIRBUS[`${from}-${to}`]||"A320",
+      aircraft:"Airbus A320",
       price:calcPrice(dist,clase)
     });
   }
@@ -150,58 +151,60 @@ function generateFlights(from,to,clase){
 }
 
 function searchOutbound(){
-  const o=document.getElementById("origin").value;
-  const d=document.getElementById("destination").value;
+  const o=originSelect.value;
+  const d=destSelect.value;
   const clase=document.getElementById("class").value;
   if(o===d){ alert("Origen y destino no pueden ser iguales."); return; }
-  let flights=generateFlights(o,d,clase);
+  const flights=generateFlights(o,d,clase);
   document.getElementById("resultsGo").style.display="block";
-  let cont=document.getElementById("flightListGo");
+  const cont=document.getElementById("flightListGo");
   cont.innerHTML="";
   flights.forEach(f=>{
-    let card=document.createElement("div");
+    const card=document.createElement("div");
     card.className="flight-card";
-    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseOutbound("${f.id}",${f.price})'>Elegir</button>`;
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseOutbound("${f.id}")'>Elegir</button>`;
     cont.appendChild(card);
   });
 }
 
-function chooseOutbound(id,price){
+function chooseOutbound(id){
   selectedOutbound=id;
   document.getElementById("resultsReturn").style.display="block";
-  const o=document.getElementById("origin").value;
-  const d=document.getElementById("destination").value;
+  const o=originSelect.value;
+  const d=destSelect.value;
   const clase=document.getElementById("class").value;
-  let flights=generateFlights(d,o,clase);
-  let cont=document.getElementById("flightListReturn");
+  const flights=generateFlights(d,o,clase);
+  const cont=document.getElementById("flightListReturn");
   cont.innerHTML="";
   flights.forEach(f=>{
-    let card=document.createElement("div");
+    const card=document.createElement("div");
     card.className="flight-card";
-    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseReturn("${f.id}",${f.price})'>Elegir vuelta</button>`;
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseReturn("${f.id}")'>Elegir vuelta</button>`;
     cont.appendChild(card);
   });
 }
 
-function chooseReturn(id,price){
+function chooseReturn(id){
   selectedReturn=id;
   document.getElementById("seatsPanel").style.display="block";
   generateSeatMap();
 }
 
 function generateSeatMap(){
-  let seatMap=document.getElementById("seatMap");
+  const seatMap=document.getElementById("seatMap");
   seatMap.innerHTML="";
   let rows=10, cols=6;
-  let clase=document.getElementById("class").value;
-  if(clase==="business"){ rows=3; cols=4; } else if(clase==="premium"){ rows=5; cols=6; }
+  const clase=document.getElementById("class").value;
+  if(clase==="business"){ rows=3; cols=4; }
+  else if(clase==="premium"){ rows=5; cols=6; }
   for(let r=1;r<=rows;r++){
-    let rowDiv=document.createElement("div"); rowDiv.className="seat-row";
+    const rowDiv=document.createElement("div"); rowDiv.className="seat-row";
     for(let c=1;c<=cols;c++){
-      let seat=document.createElement("div");
+      const seat=document.createElement("div");
       seat.className="seat";
       seat.textContent=`${r}${String.fromCharCode(64+c)}`;
-      seat.onclick=function(){ if(!seat.classList.contains("taken")){ seat.classList.toggle("selected"); } };
+      if(Math.random()<0.3) seat.classList.add("taken");
+      seat.onclick=function(){ if(!seat.classList.contains("taken")) seat.classList.toggle("selected"); };
       rowDiv.appendChild(seat);
     }
     seatMap.appendChild(rowDiv);
@@ -209,22 +212,22 @@ function generateSeatMap(){
 }
 
 function nextPassengerData(){
-  let selected=document.querySelectorAll(".seat.selected");
+  const selected=document.querySelectorAll(".seat.selected");
   if(selected.length===0){ alert("Selecciona al menos un asiento"); return; }
-  const data = {
-    vueloIdida: selectedOutbound,
-    vueloVuelta: selectedReturn,
-    origen: document.getElementById("origin").value,
-    destino: document.getElementById("destination").value,
-    fechaIda: document.getElementById("dateGo").value,
-    fechaVuelta: document.getElementById("dateReturn").value,
-    clase: document.getElementById("class").value,
-    pasajeros: Array.from(selected).map(s => ({seat:s.textContent}))
+  const data={
+    vueloIdida:selectedOutbound,
+    vueloVuelta:selectedReturn,
+    origen:originSelect.value,
+    destino:destSelect.value,
+    fechaIda:document.getElementById("dateGo").value,
+    fechaVuelta:document.getElementById("dateReturn").value,
+    clase:document.getElementById("class").value,
+    pasajeros:Array.from(selected).map(s=>({seat:s.textContent}))
   };
-  localStorage.setItem("reserva", JSON.stringify(data));
+  localStorage.setItem("reserva",JSON.stringify(data));
   window.location.href="pago.html";
 }
 </script>
+
 </body>
 </html>
-
