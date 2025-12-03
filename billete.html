@@ -27,20 +27,20 @@
 <div class="ticket" id="ticket">
   <h2>Billete electrónico</h2>
   <div class="section">
-    <div><strong>Pasajero:</strong> Juan Pérez</div>
-    <div><strong>Clase:</strong> Turista</div>
+    <div id="pasajeroName"></div>
+    <div id="clase"></div>
   </div>
   <div class="section">
-    <div><strong>Origen:</strong> Madrid (MAD)</div>
-    <div><strong>Destino:</strong> Zúrich (ZRH)</div>
+    <div id="origen"></div>
+    <div id="destino"></div>
   </div>
   <div class="section">
-    <div><strong>Fecha:</strong> 03/12/2025</div>
-    <div><strong>Hora:</strong> 09:00</div>
+    <div id="fecha"></div>
+    <div id="hora"></div>
   </div>
   <div class="section">
-    <div><strong>Asiento:</strong> 12A</div>
-    <div><strong>Avión:</strong> Airbus A320</div>
+    <div id="asiento"></div>
+    <div id="avion"></div>
   </div>
   <div class="barcode">
     <svg id="barcode"></svg>
@@ -51,22 +51,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  // Generar código de barras
-  JsBarcode("#barcode", "FL123456", {format:"CODE128", width:2, height:50, displayValue:true});
+window.onload = function(){
+  const reserva = JSON.parse(localStorage.getItem("reserva"));
+  if(!reserva) { alert("No hay datos de reserva."); return; }
 
-  function downloadPDF(){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const ticket = document.getElementById("ticket");
-    doc.html(ticket, {
-      callback: function (doc) {
-        doc.save("billete_LaFamiliaFlights.pdf");
-      },
-      x:10,
-      y:10,
-      html2canvas: { scale:0.5 }
-    });
-  }
+  const pasajero = reserva.pasajeros[0]; // primer pasajero
+  document.getElementById("pasajeroName").textContent = "Pasajero: " + (pasajero.name || "Juan Pérez");
+  document.getElementById("clase").textContent = "Clase: " + reserva.clase;
+  document.getElementById("origen").textContent = "Origen: " + reserva.origen;
+  document.getElementById("destino").textContent = "Destino: " + reserva.destino;
+  document.getElementById("fecha").textContent = "Fecha: " + reserva.fechaIda;
+  document.getElementById("hora").textContent = "Hora: 09:00";
+  document.getElementById("asiento").textContent = "Asiento: " + pasajero.seat;
+  document.getElementById("avion").textContent = "Avión: Airbus A320";
+
+  JsBarcode("#barcode", reserva.vueloIdida, {format:"CODE128", width:2, height:50, displayValue:true});
+};
+
+function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const ticket = document.getElementById("ticket");
+  doc.html(ticket, {
+    callback: function (doc) {
+      doc.save("billete_LaFamiliaFlights.pdf");
+    },
+    x:10,
+    y:10,
+    html2canvas: { scale:0.5 }
+  });
+}
 </script>
 
 </body>
