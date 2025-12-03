@@ -41,7 +41,7 @@ function register() {
   localStorage.setItem('users', JSON.stringify(storedUsers));
 
   alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-  window.location.href = 'login.html';
+  window.location.href = 'login';
 }
 
 // Función de login
@@ -59,7 +59,7 @@ function login() {
 
   if (user) {
     localStorage.setItem('userLoggedIn', JSON.stringify(user));
-    window.location.href = 'index.html';
+    window.location.href = 'index';
   } else {
     alert("Usuario o contraseña incorrectos.");
   }
@@ -68,14 +68,14 @@ function login() {
 // Función para cerrar sesión
 function logout() {
   localStorage.removeItem('userLoggedIn');
-  window.location.href = 'pagina.html';
+  window.location.href = 'pagina';
 }
 
 // Función para verificar si hay sesión activa
 function checkSession() {
   const user = JSON.parse(localStorage.getItem('userLoggedIn'));
   if (!user) {
-    window.location.href = 'pagina.html';
+    window.location.href = 'pagina';
   }
 }
 
