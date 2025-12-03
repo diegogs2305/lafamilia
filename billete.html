@@ -10,7 +10,7 @@ body { margin:0; font-family:Inter,sans-serif; background:#f4f4f4; }
 header { padding:20px; text-align:center; background:white; border-bottom:2px solid #eee; }
 h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
 .ticket { max-width:700px; margin:40px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); position:relative; }
-.ticket h2 { margin-top:0; color:#222; }
+.ticket h2 { margin-top:0; color:#222; text-align:center; }
 .section { display:flex; justify-content:space-between; margin-bottom:15px; }
 .section div { flex:1; }
 .barcode { text-align:center; margin-top:20px; }
@@ -42,6 +42,10 @@ button:hover { background:#a00000; }
     <div id="asiento"></div>
     <div id="avion"></div>
   </div>
+  <div class="section">
+    <div id="dni"></div>
+    <div id="email"></div>
+  </div>
   <div class="barcode">
     <svg id="barcode"></svg>
   </div>
@@ -52,9 +56,9 @@ button:hover { background:#a00000; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 window.onload=function(){
-  const reserva=JSON.parse(localStorage.getItem("reserva"));
-  if(!reserva){ alert("No hay datos de reserva."); return; }
-
+  const pago=JSON.parse(localStorage.getItem("pago"));
+  if(!pago){ alert("No hay datos de pago."); return; }
+  const reserva=pago.reserva;
   const pasajero=reserva.pasajeros[0]; // primer pasajero
   document.getElementById("pasajeroName").textContent="Pasajero: "+(pasajero.name||"Juan Pérez");
   document.getElementById("clase").textContent="Clase: "+reserva.clase;
@@ -64,8 +68,10 @@ window.onload=function(){
   document.getElementById("hora").textContent="Hora: 09:00";
   document.getElementById("asiento").textContent="Asiento: "+pasajero.seat;
   document.getElementById("avion").textContent="Avión: Airbus A320";
+  document.getElementById("dni").textContent="DNI/Pasaporte: "+pago.dni;
+  document.getElementById("email").textContent="Email: "+pago.email;
 
-  JsBarcode("#barcode", reserva.vueloIdida, {format:"CODE128", width:2, height:50, displayValue:true});
+  JsBarcode("#barcode", reserva.vueloIdida+reserva.vueloVuelta, {format:"CODE128", width:2, height:50, displayValue:true});
 };
 
 function downloadPDF(){
