@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LA FAMILIA FLIGHTS</title>
+<title>LA FAMILIA FLIGHTS - Selección de vuelos</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
-  body { margin:0; font-family:Inter,sans-serif; background:white; color:#222; }
-  header { padding:20px; text-align:center; border-bottom:2px solid #eee; }
-  h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
-  .app { max-width:1200px; margin:auto; padding:20px; }
-  .panel { background:#f6f6f6; padding:16px; border-radius:10px; margin-bottom:20px; border:1px solid #ddd; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  select,input,button { padding:10px; border-radius:8px; border:1px solid #bbb; width:100%; font-size:15px; }
-  button { background:#cc0000; color:white; border:none; cursor:pointer; font-weight:700; }
-  button:hover { background:#a00000; }
-  .flight-card { background:#ffffff; border:1px solid #ddd; padding:14px; border-radius:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
-  .flight-card:hover { background:#fafafa; }
-  .price { font-weight:800; color:#cc0000; font-size:18px; }
-  .seat { width:30px; height:30px; border:1px solid #888; margin:2px; display:inline-block; text-align:center; line-height:30px; cursor:pointer; border-radius:4px; }
-  .seat.taken { background:#999; cursor:not-allowed; color:#fff; }
-  .seat.selected { background:#cc0000; color:white; }
-  .seat-row { margin-bottom:5px; }
+body { margin:0; font-family:Inter,sans-serif; background:white; color:#222; }
+header { padding:20px; text-align:center; border-bottom:2px solid #eee; }
+h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
+.app { max-width:1200px; margin:auto; padding:20px; }
+.panel { background:#f6f6f6; padding:16px; border-radius:10px; margin-bottom:20px; border:1px solid #ddd; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+select,input,button { padding:10px; border-radius:8px; border:1px solid #bbb; width:100%; font-size:15px; }
+button { background:#cc0000; color:white; border:none; cursor:pointer; font-weight:700; }
+button:hover { background:#a00000; }
+.flight-card { background:#ffffff; border:1px solid #ddd; padding:14px; border-radius:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+.flight-card:hover { background:#fafafa; }
+.price { font-weight:800; color:#cc0000; font-size:18px; }
+.seat { width:30px; height:30px; border:1px solid #888; margin:2px; display:inline-block; text-align:center; line-height:30px; cursor:pointer; border-radius:4px; }
+.seat.taken { background:#999; cursor:not-allowed; color:#fff; }
+.seat.selected { background:#cc0000; color:white; }
+.seat-row { margin-bottom:5px; }
 </style>
 </head>
 <body>
@@ -31,7 +31,6 @@
 </header>
 
 <div class="app">
-
   <div class="panel">
     <h2>Reserva tu vuelo</h2>
     <div class="grid">
@@ -40,21 +39,15 @@
         <select id="origin">
           <option value="MAD">Madrid (MAD)</option>
           <option value="BCN">Barcelona (BCN)</option>
-          <option value="CDG">París (CDG)</option>
           <option value="LHR">Londres (LHR)</option>
-          <option value="ZRH">Zúrich (ZRH)</option>
-          <option value="FRA">Frankfurt (FRA)</option>
-          <option value="FCO">Roma (FCO)</option>
-          <option value="LIS">Lisboa (LIS)</option>
+          <option value="CDG">París (CDG)</option>
           <option value="JFK">Nueva York (JFK)</option>
-          <option value="LAX">Los Ángeles (LAX)</option>
           <option value="NRT">Tokio (NRT)</option>
-          <option value="SIN">Singapur (SIN)</option>
           <option value="SYD">Sídney (SYD)</option>
-          <option value="PEK">Beijing (PEK)</option>
           <option value="DXB">Dubái (DXB)</option>
-          <option value="SVO">Moscú (SVO)</option>
-          <!-- Añadir hasta 200 destinos reales -->
+          <option value="FRA">Frankfurt (FRA)</option>
+          <option value="ZRH">Zúrich (ZRH)</option>
+          <!-- Añadir más aeropuertos hasta 50 -->
         </select>
       </div>
       <div>
@@ -62,21 +55,15 @@
         <select id="destination">
           <option value="MAD">Madrid (MAD)</option>
           <option value="BCN">Barcelona (BCN)</option>
-          <option value="CDG">París (CDG)</option>
           <option value="LHR">Londres (LHR)</option>
-          <option value="ZRH">Zúrich (ZRH)</option>
-          <option value="FRA">Frankfurt (FRA)</option>
-          <option value="FCO">Roma (FCO)</option>
-          <option value="LIS">Lisboa (LIS)</option>
+          <option value="CDG">París (CDG)</option>
           <option value="JFK">Nueva York (JFK)</option>
-          <option value="LAX">Los Ángeles (LAX)</option>
           <option value="NRT">Tokio (NRT)</option>
-          <option value="SIN">Singapur (SIN)</option>
           <option value="SYD">Sídney (SYD)</option>
-          <option value="PEK">Beijing (PEK)</option>
           <option value="DXB">Dubái (DXB)</option>
-          <option value="SVO">Moscú (SVO)</option>
-          <!-- Añadir hasta 200 destinos reales -->
+          <option value="FRA">Frankfurt (FRA)</option>
+          <option value="ZRH">Zúrich (ZRH)</option>
+          <!-- Igual, hasta 50 -->
         </select>
       </div>
       <div>
@@ -118,24 +105,45 @@
     <div id="seatMap"></div>
     <button onclick="nextPassengerData()">Siguiente</button>
   </div>
-
 </div>
 
 <script>
 const AIRBUS={"MAD-ZRH":"A320","BCN-ZRH":"A321","MAD-LHR":"A320"};
-let selectedOutbound, selectedReturn, passengerList=[];
+let selectedOutbound, selectedReturn;
 
-function generateFlights(from,to){
-  let list=[], duration=Math.floor(Math.random()*10)+1;
-  for(let i=0;i<5;i++){
-    let key=`${from}-${to}`;
+function distance(from,to){
+  // Distancias aproximadas en km
+  const dists={
+    "MAD-BCN":505,"MAD-LHR":1263,"MAD-CDG":1054,"MAD-ZRH":1440,
+    "MAD-JFK":5840,"MAD-NRT":10870,"MAD-SYD":16990,"MAD-DXB":5470,"MAD-FRA":1235
+  };
+  return dists[`${from}-${to}`] || dists[`${to}-${from}`] || 1000;
+}
+
+function calcDuration(dist){
+  let speed=850; // km/h Airbus
+  return Math.ceil(dist/speed);
+}
+
+function calcPrice(dist,clase){
+  let base=0.1*dist; // 0.1€ por km
+  if(clase==="premium") base*=1.5;
+  if(clase==="business") base*=2.5;
+  return Math.round(base);
+}
+
+function generateFlights(from,to,clase){
+  let dist=distance(from,to);
+  let duration=calcDuration(dist);
+  let list=[];
+  for(let i=0;i<3;i++){
     list.push({
       id:"FL"+Math.floor(Math.random()*999999),
       from,to,
       time:`${8+i}:00`,
       duration:duration+"h",
-      aircraft:AIRBUS[key]||"A320",
-      price:Math.floor(Math.random()*500)+50
+      aircraft:AIRBUS[`${from}-${to}`]||"A320",
+      price:calcPrice(dist,clase)
     });
   }
   return list;
@@ -144,37 +152,39 @@ function generateFlights(from,to){
 function searchOutbound(){
   const o=document.getElementById("origin").value;
   const d=document.getElementById("destination").value;
+  const clase=document.getElementById("class").value;
   if(o===d){ alert("Origen y destino no pueden ser iguales."); return; }
-  let flights=generateFlights(o,d);
+  let flights=generateFlights(o,d,clase);
   document.getElementById("resultsGo").style.display="block";
   let cont=document.getElementById("flightListGo");
   cont.innerHTML="";
   flights.forEach(f=>{
     let card=document.createElement("div");
     card.className="flight-card";
-    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseOutbound("${f.id}")'>Elegir</button>`;
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseOutbound("${f.id}",${f.price})'>Elegir</button>`;
     cont.appendChild(card);
   });
 }
 
-function chooseOutbound(id){
-  window.selectedOutbound=id;
+function chooseOutbound(id,price){
+  selectedOutbound=id;
   document.getElementById("resultsReturn").style.display="block";
   const o=document.getElementById("origin").value;
   const d=document.getElementById("destination").value;
-  let flights=generateFlights(d,o);
+  const clase=document.getElementById("class").value;
+  let flights=generateFlights(d,o,clase);
   let cont=document.getElementById("flightListReturn");
   cont.innerHTML="";
   flights.forEach(f=>{
     let card=document.createElement("div");
     card.className="flight-card";
-    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseReturn("${f.id}")'>Elegir vuelta</button>`;
+    card.innerHTML=`<div><strong>${f.from} → ${f.to}</strong><br>${f.time} — ${f.duration}<br>Avión: ${f.aircraft}</div><div class="price">${f.price}€</div><button onclick='chooseReturn("${f.id}",${f.price})'>Elegir vuelta</button>`;
     cont.appendChild(card);
   });
 }
 
-function chooseReturn(id){
-  window.selectedReturn=id;
+function chooseReturn(id,price){
+  selectedReturn=id;
   document.getElementById("seatsPanel").style.display="block";
   generateSeatMap();
 }
@@ -189,7 +199,8 @@ function generateSeatMap(){
     let rowDiv=document.createElement("div"); rowDiv.className="seat-row";
     for(let c=1;c<=cols;c++){
       let seat=document.createElement("div");
-      seat.className="seat"; seat.textContent=`${r}${String.fromCharCode(64+c)}`;
+      seat.className="seat";
+      seat.textContent=`${r}${String.fromCharCode(64+c)}`;
       seat.onclick=function(){ if(!seat.classList.contains("taken")){ seat.classList.toggle("selected"); } };
       rowDiv.appendChild(seat);
     }
@@ -201,8 +212,8 @@ function nextPassengerData(){
   let selected=document.querySelectorAll(".seat.selected");
   if(selected.length===0){ alert("Selecciona al menos un asiento"); return; }
   const data = {
-    vueloIdida: window.selectedOutbound,
-    vueloVuelta: window.selectedReturn,
+    vueloIdida: selectedOutbound,
+    vueloVuelta: selectedReturn,
     origen: document.getElementById("origin").value,
     destino: document.getElementById("destination").value,
     fechaIda: document.getElementById("dateGo").value,
@@ -214,6 +225,6 @@ function nextPassengerData(){
   window.location.href="pago.html";
 }
 </script>
-
 </body>
 </html>
+
