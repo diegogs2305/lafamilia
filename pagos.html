@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA FAMILIA FLIGHTS - Pago</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  body { margin:0; font-family:Inter,sans-serif; background:#f4f4f4; color:#222; }
+  header { padding:20px; text-align:center; border-bottom:2px solid #eee; background:white; }
+  h1 { margin:0; font-size:28px; font-weight:800; color:#cc0000; }
+  .app { max-width:500px; margin:40px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+  label { display:block; margin-top:15px; font-weight:600; }
+  input { width:100%; padding:12px; margin-top:5px; border-radius:8px; border:1px solid #bbb; font-size:16px; }
+  button { margin-top:25px; width:100%; padding:14px; background:#cc0000; color:white; border:none; border-radius:8px; font-size:18px; font-weight:700; cursor:pointer; }
+  button:hover { background:#a00000; }
+  .info { margin-top:10px; font-size:14px; color:#555; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LA FAMILIA FLIGHTS</h1>
+</header>
+
+<div class="app">
+  <h2>Pasarela de pago</h2>
+
+  <label>Nombre en la tarjeta</label>
+  <input type="text" id="cardName" placeholder="Juan Pérez">
+
+  <label>Número de tarjeta</label>
+  <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+
+  <div style="display:flex; gap:10px;">
+    <div style="flex:1;">
+      <label>Fecha expiración</label>
+      <input type="text" id="expDate" placeholder="MM/AA" maxlength="5">
+    </div>
+    <div style="flex:1;">
+      <label>CVC</label>
+      <input type="text" id="cvc" placeholder="123" maxlength="4">
+    </div>
+  </div>
+
+  <div class="info">Pago simulado – Los datos no se guardan</div>
+  <button onclick="processPayment()">Pagar</button>
+</div>
+
+<script>
+function processPayment(){
+  const name=document.getElementById("cardName").value.trim();
+  const number=document.getElementById("cardNumber").value.trim().replace(/\s+/g,'');
+  const exp=document.getElementById("expDate").value.trim();
+  const cvc=document.getElementById("cvc").value.trim();
+
+  // Validaciones simples
+  if(!name||number.length!==16||!/^\d+$/.test(number)||!/^\d{2}\/\d{2}$/.test(exp)||cvc.length<3){
+    alert("Por favor completa todos los campos correctamente.");
+    return;
+  }
+
+  alert("Pago procesado con éxito. Redirigiendo al billete...");
+  // Aquí redirigirías a la página del billete final
+  window.location.href="billete.html";
+}
+</script>
+
+</body>
+</html>
