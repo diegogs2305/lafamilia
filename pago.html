@@ -54,14 +54,13 @@ function processPayment(){
   const exp=document.getElementById("expDate").value.trim();
   const cvc=document.getElementById("cvc").value.trim();
 
-  // Validaciones simples
   if(!name||number.length!==16||!/^\d+$/.test(number)||!/^\d{2}\/\d{2}$/.test(exp)||cvc.length<3){
     alert("Por favor completa todos los campos correctamente.");
     return;
   }
 
+  localStorage.setItem("pago", JSON.stringify({name,number,exp}));
   alert("Pago procesado con éxito. Redirigiendo al billete...");
-  // Aquí redirigirías a la página del billete final
   window.location.href="billete.html";
 }
 </script>
